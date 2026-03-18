@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>逗點教室 | AI 品牌文案自動化產線 (V6.1 智能大腦版)</title>
+    <title>逗點教室 | AI 品牌文案自動化產線 (V6.2 精準大腦版)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root { --comma-hq: #2d3b48; --comma-yellow: #ffd600; }
@@ -24,7 +24,7 @@
                 <span class="text-2xl">🔥</span>
                 <div>
                     <h1 class="text-xl font-bold tracking-wider">COMMA 逗點教室</h1>
-                    <p class="text-xs text-gray-300">品牌內容自動化產線 v6.1 (智能大腦防呆版)</p>
+                    <p class="text-xs text-gray-300">品牌內容自動化產線 v6.2 (精準大腦版)</p>
                 </div>
             </div>
             <div class="flex items-center gap-2 bg-slate-700 p-2 rounded-lg w-full md:w-auto">
@@ -85,7 +85,7 @@
                     
                     <div>
                         <label class="block text-sm font-bold text-red-600 mb-1">🚨 3. 關鍵訊息 & 在地細節 (強烈建議填寫)</label>
-                        <textarea id="notes" rows="4" placeholder="【魔法藏在細節裡】請務必寫上分校發生的真實故事或細節！\n\n❌ 錯誤示範：強調陪伴、快來報名。\n✅ 正確示範：今天旭日校發披薩慶祝段考結束，幾個國二男生笑得很開心，強調我們陪著孩子一起讀書一起玩。" class="w-full p-2.5 bg-red-50 border border-red-200 rounded-lg outline-none text-sm leading-relaxed placeholder-gray-400"></textarea>
+                        <textarea id="notes" rows="4" placeholder="【魔法藏在細節裡】請寫上分校的真實故事！&#10;❌ 錯誤：強調陪伴、快來報名。&#10;✅ 正確：今天旭日校發披薩慶祝段考，幾個國二生笑得很開心，陪著孩子一起讀書一起玩。" class="w-full p-2.5 bg-red-50 border border-red-200 rounded-lg outline-none text-sm leading-relaxed placeholder-gray-400"></textarea>
                     </div>
                 </div>
 
@@ -134,23 +134,29 @@
 
         const LEVEL_NAMES = { "ele": "國小部", "jun": "國中部", "sen": "高中部" };
 
-        // --- 2. 產銷節奏大腦 (1-12月) ---
+        // --- 2. 產銷節奏大腦 (已按部別嚴格切割) ---
         const MONTHLY_CALENDAR = {
-            1: { fest: ["春節"], recruit: ["國一先修內招生", "寒假營隊"] },
-            2: { fest: ["春節", "開學"], recruit: ["國一先修外招生"] },
-            3: { fest: ["無特定節慶"], recruit: ["國小暑期營隊啟動", "國一先修外招生"] },
-            4: { fest: ["兒童節", "清明節"], recruit: ["國一先修外招生"] },
-            5: { fest: ["母親節"], recruit: ["國二/高二暑期營隊啟動"] },
-            6: { fest: ["端午節", "畢業季"], recruit: ["會考後銜接"] },
-            7: { fest: ["暑假開始"], recruit: ["暑期營隊", "暑期輔導"] },
-            8: { fest: ["父親節"], recruit: ["暑期營隊", "暑期輔導"] },
-            9: { fest: ["中秋節", "開學"], recruit: ["國小/中/高寒假營隊啟動"] },
-            10: { fest: ["雙十節", "萬聖節"], recruit: ["段考準備"] },
-            11: { fest: ["感恩節"], recruit: ["資優私中招生", "國一先修內招生"] },
-            12: { fest: ["聖誕節", "跨年"], recruit: ["小一先修啟動", "國一先修內招生", "高一贏領營"] }
+            1: { fest: ["春節預熱"], recruit: { ele: ["寒假營隊"], jun: ["國一先修內招生", "寒假營隊"], sen: ["寒假營隊"] } },
+            2: { fest: ["春節", "開學收心"], recruit: { ele: [], jun: ["國一先修外招生"], sen: [] } },
+            3: { fest: ["無特定節慶"], recruit: { ele: ["國小暑期營隊招生啟動"], jun: ["國一先修外招生"], sen: [] } },
+            4: { fest: ["兒童節", "清明節"], recruit: { ele: [], jun: ["國一先修外招生"], sen: [] } },
+            5: { fest: ["母親節"], recruit: { ele: [], jun: ["國二暑期營隊招生啟動"], sen: ["高二暑期營隊招生啟動"] } },
+            6: { fest: ["端午節", "畢業季"], recruit: { ele: [], jun: ["會考後銜接"], sen: [] } },
+            7: { fest: ["暑假開始"], recruit: { ele: ["暑期營隊"], jun: ["暑期營隊", "暑期輔導"], sen: ["暑期輔導"] } },
+            8: { fest: ["父親節"], recruit: { ele: ["暑期營隊"], jun: ["暑期輔導"], sen: ["暑期輔導"] } },
+            9: { fest: ["中秋節", "開學"], recruit: { ele: ["寒假營隊招生啟動"], jun: ["寒假營隊招生啟動"], sen: ["寒假營隊招生啟動"] } },
+            10: { fest: ["雙十節", "萬聖節"], recruit: { ele: [], jun: ["段考準備"], sen: ["段考準備"] } },
+            11: { fest: ["感恩節"], recruit: { ele: ["資優私中招生啟動"], jun: ["國一先修內招生"], sen: [] } },
+            12: { fest: ["聖誕節", "跨年"], recruit: { ele: ["小一先修招生啟動"], jun: ["國一先修內招生"], sen: ["高一贏領營招生啟動"] } }
         };
 
-        // --- 3. 課程價值大數據 (隱形注入用) ---
+        // --- 3. 全新課程清單 (D4 完整版) ---
+        const NORMAL_COURSES = {
+            "ele": ["國小創新全人素養班", "國小精修資優數學", "奧數選手班", "芝蔴街美語", "TEAMMS跨領域英語", "黑洞科學", "逗點閱思素養課程", "溫美玉科技作文", "資優鑑定私中培訓班", "覓彌爾機器人", "自然資優培訓班", "小一STREAM營隊", "五學超人探索營", "七感饗宴", "寶島台灣逗陣行", "環遊世界ＦＵＮ暑假", "生活實習家", "菁英學院養成營", "超腦開發實驗室", "未來領袖學院", "未來玩家-不可能的任務", "超新星領航計畫"],
+            "jun": ["國中數學精修班/資優班", "國中自然精修班/資優班", "國中英文精修班/資優班", "國中國文精修班", "國中社會精修班", "國一超修資優數學（復旦專班）", "國一先修暑期素養班", "國一超修學霸養成班", "國一全人素養營", "國二創世紀職涯挑戰營", "國三戰逗暑訓營", "國三黑馬衝刺營", "國三會考模考班", "武陵科學數理資優拔尖班"],
+            "sen": ["高中數學精修班", "高中自然精修班", "高中英文精修班", "高中國文精修班", "學測衝刺班", "分科攻頂班", "高一贏領營", "高一職涯探索營", "高二夢想實踐營", "高三學測衝刺班", "高三分科攻頂班"]
+        };
+
         const COURSE_DB = {
             "創新全人素養班": {
                 features: "以品學為本，數學、美學、科學、文學五學並進。結合大型桌遊『我是CEO』，採用沉浸式教學打造『引導自學』的環境。",
@@ -177,27 +183,20 @@
                 pain: "擔心孩子無法適應國中課業與生活壓力，需要有溫度的引導。",
                 results: "超前進度建立自信，一段成績優異，成功建立家長極高信任感。"
             },
-            "會考衝刺": {
+            "會考模考": {
                 features: "大量五科模擬題本實戰，傳授時間分配，要求製作專屬錯題本，安排廟宇祈福安定軍心。",
                 pain: "國三生面對大考範圍廣泛感到焦慮，不知如何統整複習。",
                 results: "全科無人考C，5A班全數達標，順利考取理想志願。"
             },
-            "高中學測衝刺班": {
+            "學測衝刺班": {
                 features: "依108課綱規劃主科循序漸進複習，每週定期測驗搭配錯題分析精準補強。",
                 pain: "高中課業繁重，缺乏系統化複習策略與時間管理能力。",
                 results: "模擬考成績逐步上升，透過繁星或申請入學錄取第一志願。"
             }
         };
 
-        // 常態課程選項對應表
-        const NORMAL_COURSES = {
-            "ele": ["創新全人素養班", "精修資優數學", "奧數選手班", "TEAMMS跨領域英語", "黑洞科學", "逗點閱思素養", "科技作文", "資優鑑定私中培訓班"],
-            "jun": ["國一先修", "國中數學進度/資優", "國中自然實驗", "國中英文素養", "會考衝刺", "科資競賽班"],
-            "sen": ["高中數學", "高中自然", "高中英文寫作", "高中國文", "高中學測衝刺班", "分科攻頂班"]
-        };
-
         let isApiMode = false;
-        let currentMonth = new Date().getMonth() + 1; // 自動取得真實月份
+        let currentMonth = new Date().getMonth() + 1;
 
         window.onload = function() {
             const savedKey = localStorage.getItem('comma_groq_key');
@@ -229,7 +228,7 @@
             if(key) { localStorage.setItem('comma_groq_key', key); alert('已儲存！'); }
         }
 
-        // --- 動態更新靈感角落 (強迫不寫入 Notes) ---
+        // --- 動態更新靈感角落 (修復招生篩選 Bug) ---
         function updateDynamicInspirations() {
             const branch = document.getElementById('branchSelect').value;
             const level = BRANCH_DATA[branch].level; 
@@ -243,18 +242,18 @@
             if (docType === "節慶") {
                 recommendations = rhythm.fest;
             } else if (docType === "招生檔期") {
-                recommendations = rhythm.recruit;
+                // 🚀 修復：現在會根據分校部別，只吐出對應的招生項目
+                recommendations = rhythm.recruit[level] || [];
             } else if (docType === "常態課程") {
                 recommendations = NORMAL_COURSES[level];
             }
 
-            if(recommendations.length === 0) recommendations = ["本月暫無特殊排程，請手動輸入"];
+            if(recommendations.length === 0) recommendations = ["本月暫無特殊排程，請手動輸入主題"];
             
             recommendations.forEach(item => {
                 const btn = document.createElement('button');
                 btn.className = "bg-white border border-gray-300 text-gray-700 text-xs px-3 py-1.5 rounded shadow-sm hover:bg-comma hover:text-white transition-all font-bold";
                 btn.innerText = item;
-                // 🚀 關鍵修改：只帶入 Topic，清空 Notes 強迫主任手寫
                 btn.onclick = () => {
                     document.getElementById('topic').value = item;
                     document.getElementById('notes').value = ""; 
@@ -264,7 +263,6 @@
             });
         }
 
-        // 偵測是否觸發隱形資料庫
         function checkHiddenCourseData(topicInput) {
             const msg = document.getElementById('hiddenDataMsg');
             let found = false;
@@ -295,7 +293,6 @@
                 if(!confirmEmpty) return;
             }
 
-            // --- 隱形武功秘笈注入邏輯 ---
             let hiddenCoursePrompt = "";
             for(let key in COURSE_DB) {
                 if(topic.includes(key) || notes.includes(key)) {
