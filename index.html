@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>逗點教室 | AI 品牌文案自動化產線 (V6.2 精準大腦版)</title>
+    <title>逗點教室 | AI 品牌文案自動化產線 (V6.3 潤飾進化版)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root { --comma-hq: #2d3b48; --comma-yellow: #ffd600; }
@@ -24,7 +24,7 @@
                 <span class="text-2xl">🔥</span>
                 <div>
                     <h1 class="text-xl font-bold tracking-wider">COMMA 逗點教室</h1>
-                    <p class="text-xs text-gray-300">品牌內容自動化產線 v6.2 (精準大腦版)</p>
+                    <p class="text-xs text-gray-300">品牌內容自動化產線 v6.3 (潤飾進化版)</p>
                 </div>
             </div>
             <div class="flex items-center gap-2 bg-slate-700 p-2 rounded-lg w-full md:w-auto">
@@ -85,9 +85,9 @@
                     
                     <div>
                         <label class="block text-sm font-bold text-red-600 mb-1">🚨 3. 關鍵訊息 & 在地細節 (強烈建議填寫)</label>
-                        <textarea id="notes" rows="4" placeholder="【魔法藏在細節裡】請寫上分校的真實故事！
-❌ 錯誤：強調陪伴、快來報名。
-✅ 正確：今天旭日校發披薩慶祝段考，幾個國二生笑得很開心，陪著孩子一起讀書一起玩。" class="w-full p-2.5 bg-red-50 border border-red-200 rounded-lg outline-none text-sm leading-relaxed placeholder-gray-400"></textarea>
+                        <textarea id="notes" rows="5" placeholder="【魔法藏在細節裡】AI 會幫您把這些句子潤飾成漂亮的故事！
+❌ 錯誤示範：強調陪伴、快來報名。
+✅ 正確示範：今天旭日校發披薩慶祝段考，幾個國二生笑得很開心，陪著孩子一起讀書一起玩。" class="w-full p-2.5 bg-red-50 border border-red-200 rounded-lg outline-none text-sm leading-relaxed placeholder-gray-400"></textarea>
                     </div>
                 </div>
 
@@ -101,7 +101,7 @@
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 flex-grow flex flex-col overflow-hidden">
                 <div class="bg-[#f1f5f9] border-b border-gray-200 py-3 px-4 flex justify-between items-center">
                     <span class="font-bold text-comma">Facebook 專屬產出結果</span>
-                    <span class="text-xs bg-comma text-white px-2 py-1 rounded">300-350字限定</span>
+                    <span class="text-xs bg-comma text-white px-2 py-1 rounded">150-200字限定</span>
                 </div>
                 <div class="p-6 flex-grow bg-slate-50 relative">
                     <div id="loadingUI" class="hidden absolute inset-0 bg-slate-50 bg-opacity-90 flex flex-col justify-center items-center z-10">
@@ -136,7 +136,7 @@
 
         const LEVEL_NAMES = { "ele": "國小部", "jun": "國中部", "sen": "高中部" };
 
-        // --- 2. 產銷節奏大腦 (已按部別嚴格切割) ---
+        // --- 2. 產銷節奏大腦 (加入安全防護網) ---
         const MONTHLY_CALENDAR = {
             1: { fest: ["春節預熱"], recruit: { ele: ["寒假營隊"], jun: ["國一先修內招生", "寒假營隊"], sen: ["寒假營隊"] } },
             2: { fest: ["春節", "開學收心"], recruit: { ele: [], jun: ["國一先修外招生"], sen: [] } },
@@ -152,7 +152,7 @@
             12: { fest: ["聖誕節", "跨年"], recruit: { ele: ["小一先修招生啟動"], jun: ["國一先修內招生"], sen: ["高一贏領營招生啟動"] } }
         };
 
-        // --- 3. 全新課程清單 (D4 完整版) ---
+        // --- 3. 課程清單 ---
         const NORMAL_COURSES = {
             "ele": ["國小創新全人素養班", "國小精修資優數學", "奧數選手班", "芝蔴街美語", "TEAMMS跨領域英語", "黑洞科學", "逗點閱思素養課程", "溫美玉科技作文", "資優鑑定私中培訓班", "覓彌爾機器人", "自然資優培訓班", "小一STREAM營隊", "五學超人探索營", "七感饗宴", "寶島台灣逗陣行", "環遊世界ＦＵＮ暑假", "生活實習家", "菁英學院養成營", "超腦開發實驗室", "未來領袖學院", "未來玩家-不可能的任務", "超新星領航計畫"],
             "jun": ["國中數學精修班/資優班", "國中自然精修班/資優班", "國中英文精修班/資優班", "國中國文精修班", "國中社會精修班", "國一超修資優數學（復旦專班）", "國一先修暑期素養班", "國一超修學霸養成班", "國一全人素養營", "國二創世紀職涯挑戰營", "國三戰逗暑訓營", "國三黑馬衝刺營", "國三會考模考班", "武陵科學數理資優拔尖班"],
@@ -161,39 +161,39 @@
 
         const COURSE_DB = {
             "創新全人素養班": {
-                features: "以品學為本，數學、美學、科學、文學五學並進。結合大型桌遊『我是CEO』，採用沉浸式教學打造『引導自學』的環境。",
-                pain: "學習領域發展不均衡，課業負擔重無法有效預習，面對大數字計算感到焦慮最後只能死背。",
-                results: "讓孩子成為『自己的主人』，學會尊重與感恩生命，成就全人發展。"
+                features: "以品學為本，五學並進。結合桌遊『我是CEO』，採用沉浸式教學。",
+                pain: "領域發展不均，課業負擔重，大數字計算焦慮。",
+                results: "學會尊重生命，成就全人發展。"
             },
             "黑洞科學": {
-                features: "每階段12單元不重複，一人一份實驗器材，將複雜的科學理論轉化為手作實驗。",
-                pain: "坊間科學課缺乏實體物容易失去熱情，傳統多以背誦為主缺乏思辨能力，大班授課孩子容易被忽略。",
-                results: "開啟科學好奇心，引導探究與思考，甚至能參與科展培訓。"
+                features: "每階段12單元不重複，一人一份實驗器材，理論轉化手作。",
+                pain: "坊間缺乏實體物，傳統多背誦缺乏思辨。",
+                results: "開啟科學好奇心，引導探究與思考。"
             },
             "科技作文": {
-                features: "觸控螢幕輔助教學，搭配範文導讀與具體評分標準，中高年級漸進式強化寫作。",
-                pain: "詞彙量不足不知如何下筆，結構鬆散，對寫作感到抗拒與挫折。",
-                results: "讓孩子從害怕寫作變成愛上寫作，文字與理解能力大幅提升。"
+                features: "觸控螢幕輔助，搭配範文與具體評分，漸進式強化寫作。",
+                pain: "詞彙不足不知下筆，結構鬆散，對寫作抗拒。",
+                results: "從害怕變成愛上寫作，文字理解力大增。"
             },
-            "資優鑑定私中培訓班": {
-                features: "專為私中設計教材，精緻小班，強調理解非盲目刷題，專業導師陪伴兼顧心理。",
-                pain: "大班制缺乏關注，過度刷題導致彈性疲乏，家長不知如何安排備考時程。",
-                results: "私校錄取率達九成，穩定學習節奏並兼顧全人發展心態。"
+            "私中": {
+                features: "專為私中設計教材，精緻小班，強調理解非盲目刷題。",
+                pain: "大班制缺乏關注，過度刷題導致疲乏。",
+                results: "穩定學習節奏並兼顧全人心態。"
             },
             "國一先修": {
-                features: "暑假即完成國一首次段考九成進度，傳授各科筆記心法，舉辦態度翻轉戰逗營。",
-                pain: "擔心孩子無法適應國中課業與生活壓力，需要有溫度的引導。",
-                results: "超前進度建立自信，一段成績優異，成功建立家長極高信任感。"
+                features: "超前完成國一首次段考進度，傳授筆記心法，舉辦態度翻轉營。",
+                pain: "擔心無法適應國中課業與生活壓力。",
+                results: "建立自信，成功建立家長信任感。"
             },
-            "會考模考": {
-                features: "大量五科模擬題本實戰，傳授時間分配，要求製作專屬錯題本，安排廟宇祈福安定軍心。",
-                pain: "國三生面對大考範圍廣泛感到焦慮，不知如何統整複習。",
-                results: "全科無人考C，5A班全數達標，順利考取理想志願。"
+            "會考": {
+                features: "大量模擬實戰，傳授時間分配，要求錯題本，祈福安定軍心。",
+                pain: "面對大考範圍廣泛感到焦慮，不知如何統整。",
+                results: "順利考取理想志願。"
             },
-            "學測衝刺班": {
-                features: "依108課綱規劃主科循序漸進複習，每週定期測驗搭配錯題分析精準補強。",
-                pain: "高中課業繁重，缺乏系統化複習策略與時間管理能力。",
-                results: "模擬考成績逐步上升，透過繁星或申請入學錄取第一志願。"
+            "學測": {
+                features: "依108課綱規劃複習，定期測驗搭配錯題分析補強。",
+                pain: "高中課業繁重，缺乏系統化策略與時間管理。",
+                results: "模擬考成績逐步上升，錄取第一志願。"
             }
         };
 
@@ -230,33 +230,41 @@
             if(key) { localStorage.setItem('comma_groq_key', key); alert('已儲存！'); }
         }
 
-        // --- 動態更新靈感角落 (修復招生篩選 Bug) ---
         function updateDynamicInspirations() {
             const branch = document.getElementById('branchSelect').value;
             const level = BRANCH_DATA[branch].level; 
             const docType = document.getElementById('docType').value;
             const container = document.getElementById('inspirationBox');
-            const rhythm = MONTHLY_CALENDAR[currentMonth];
+            
+            // 加入安全防護：如果讀不到資料，預設給空陣列，避免 undefined
+            const rhythm = MONTHLY_CALENDAR[currentMonth] || { fest: [], recruit: { ele: [], jun: [], sen: [] } };
 
             container.innerHTML = '';
             let recommendations = [];
 
             if (docType === "節慶") {
-                recommendations = rhythm.fest;
+                recommendations = rhythm.fest || [];
             } else if (docType === "招生檔期") {
-                // 🚀 修復：現在會根據分校部別，只吐出對應的招生項目
-                recommendations = rhythm.recruit[level] || [];
+                recommendations = (rhythm.recruit && rhythm.recruit[level]) ? rhythm.recruit[level] : [];
             } else if (docType === "常態課程") {
-                recommendations = NORMAL_COURSES[level];
+                recommendations = NORMAL_COURSES[level] || [];
             }
 
-            if(recommendations.length === 0) recommendations = ["本月暫無特殊排程，請手動輸入主題"];
+            // 如果完全沒有資料，顯示提示按鈕
+            if(recommendations.length === 0) {
+                recommendations = ["本月暫無特殊排程"];
+            }
             
             recommendations.forEach(item => {
+                // 如果 item 真的變成 undefined，強制跳過不顯示
+                if(!item) return; 
+
                 const btn = document.createElement('button');
                 btn.className = "bg-white border border-gray-300 text-gray-700 text-xs px-3 py-1.5 rounded shadow-sm hover:bg-comma hover:text-white transition-all font-bold";
                 btn.innerText = item;
                 btn.onclick = () => {
+                    // 如果點擊的是無排程提示，不自動帶入
+                    if(item === "本月暫無特殊排程") return;
                     document.getElementById('topic').value = item;
                     document.getElementById('notes').value = ""; 
                     checkHiddenCourseData(item);
@@ -290,52 +298,52 @@
             const notes = document.getElementById('notes').value.trim();
 
             if(!topic) return alert("請輸入「文案主題」！");
-            if(!notes) {
-                const confirmEmpty = confirm("🚨 警告：您的「關鍵訊息與在地細節」是空白的！\n\n如果沒有填寫細節，AI 產出的文案會變得像傳統補習班的「罐頭空話」，缺乏各分校的真實溫度。\n\n您確定要繼續產出嗎？(強烈建議按取消，回去補充一兩句真實故事)");
-                if(!confirmEmpty) return;
-            }
 
             let hiddenCoursePrompt = "";
             for(let key in COURSE_DB) {
                 if(topic.includes(key) || notes.includes(key)) {
-                    hiddenCoursePrompt += `\n【系統自動注入：${key} 專屬課程價值】\n`;
+                    hiddenCoursePrompt += `\n【隱藏版系統指示：${key} 專屬課程價值】\n`;
                     hiddenCoursePrompt += `- 課程特色：${COURSE_DB[key].features}\n`;
                     hiddenCoursePrompt += `- 家長痛點：${COURSE_DB[key].pain}\n`;
                     hiddenCoursePrompt += `- 關鍵成果：${COURSE_DB[key].results}\n`;
-                    hiddenCoursePrompt += `(⚠️ 寫作指令：請務必將上述的「家長痛點」與「課程特色」自然地揉合進文案的故事中，讓家長感到被理解。)\n`;
                 }
             }
 
+            // 🚀 核心升級：字數 150-200，並且加入「強制改寫潤飾」指令
             const finalPrompt = `角色設定：
-你是「COMMA 逗點教室」的資深社群總監與生命教練。請完全吸收以下的品牌大腦，為我們撰寫一篇可以直接發布在 Facebook 的長文案。
+你是「COMMA 逗點教室」的資深社群總監。請完全吸收以下的品牌大腦，撰寫可以直接發布的 Facebook 貼文。
 
 【逗點品牌大腦與核心靈魂】
 1. 品牌定位：不是成績加工廠，而是「教育基地」。使命是「接住每一個孩子」。
 2. 核心價值：陪伴大於成績、全人發展與境教、善的循環。
-3. 受眾：35-50歲重視質感的現代家長。痛點是怕孩子失去笑容、怕撕裂親子關係。
+3. 受眾：35-50歲重視質感的現代家長。
 
 【寫作風格與禁忌】
-- 語氣：溫暖真誠、熱血正向、專業堅定。
-- 禁用詞彙：恐嚇行銷(落後別人)、冰冷詞彙(保證班、滿分狀元)、上對下說教。
+- 語氣：溫暖真誠、熱血正向。
+- 禁用：恐嚇行銷(落後別人)、冰冷詞彙(保證班、滿分狀元)、上對下說教。
 - 稱呼：請用「逗點」、「教育基地」或「大人朋友」。稱呼家長為「逗爸逗媽」。
-- 排版：段落必定留白(空行)。適度使用溫暖 Emoji (💛, ✨, 🫶🏻, 🤜🏻🤛🏻, 🔥)。
+- 排版：段落必定留白。適度使用溫暖 Emoji (💛, ✨, 🫶🏻, 🤜🏻🤛🏻, 🔥)。
 
-【FB 專屬爆款貼文骨架 (正文300-350字)】
-1. 破題金句 (Hook)：用一句話戳中痛點或共鳴，標題前後必須用 ◤ ◢ 包起來。
-2. 痛點同理 (Story)：生動描述真實教養場景。
-3. 逗點解法 (Solution)：帶入「陪伴」或「境教」理念。
-4. 溫暖呼籲 (CTA)：自然引導行動，附 3-5 個 Hashtag。
+【FB 專屬爆款貼文骨架 (正文精準控制在 150-200 字之間)】
+1. 破題金句 (Hook)：用一句話戳中痛點，標題必須用 ◤ ◢ 包起來。
+2. 痛點同理與解法：自然帶入「陪伴」或「境教」理念。
+3. 溫暖呼籲 (CTA)：自然引導行動，附 3-5 個 Hashtag。
 
 【本次任務需求】
 發布分校：${LEVEL_NAMES[branchInfo.level]} (${branchInfo.name})
 文案類型：${type}
 文案主題：${topic}
-在地細節/關鍵訊息：${notes ? notes : "無提供細節，請依據品牌精神自由發揮"}
+
+【在地真實細節素材】
+${notes ? notes : "無提供細節，請依據品牌精神自由發揮"}
 ${hiddenCoursePrompt}
+
+🚨 核心寫作指令（極度重要）：
+請務必將上方提供的「在地真實細節素材」作為靈感，用溫暖、專業的社群小編語氣進行「重新改寫、擴寫與潤飾」，自然地揉合進文案的故事中。絕對不能原封不動地照抄使用者輸入的句子！讓讀者覺得這是一段生動流暢的真實分享。
 
 【輸出格式最終限制】
 1. 直接輸出純文字貼文，不加開場廢話，禁用 JSON 或 Markdown 區塊。
-2. 請在文案的最末端，直接接上以下的「固定結尾資訊」（請不要加上任何外框或括號）：
+2. 結尾請直接接上以下的「固定結尾資訊」（不要加外框或括號）：
 
 ⸻⸻⸻⸻⸻⸻
 「逗點，是一個創新的起點。」
