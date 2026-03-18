@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>逗點教室 | AI 品牌文案自動化產線 (V6 策略大腦版)</title>
+    <title>逗點教室 | AI 品牌文案自動化產線 (V6.1 智能大腦版)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root { --comma-hq: #2d3b48; --comma-yellow: #ffd600; }
@@ -24,7 +24,7 @@
                 <span class="text-2xl">🔥</span>
                 <div>
                     <h1 class="text-xl font-bold tracking-wider">COMMA 逗點教室</h1>
-                    <p class="text-xs text-gray-300">品牌內容自動化產線 v6.0 (策略大腦版)</p>
+                    <p class="text-xs text-gray-300">品牌內容自動化產線 v6.1 (智能大腦防呆版)</p>
                 </div>
             </div>
             <div class="flex items-center gap-2 bg-slate-700 p-2 rounded-lg w-full md:w-auto">
@@ -54,37 +54,25 @@
                 <h3 class="font-bold text-gray-800 mb-4 border-l-4 border-comma-hq pl-2">策略文案需求設定</h3>
                 
                 <div class="space-y-4">
-                    <div class="grid grid-cols-2 gap-3">
-                        <div>
-                            <label class="block text-xs font-bold text-comma mb-1">📍 0. 選擇分校</label>
-                            <select id="branchSelect" onchange="updateDynamicInspirations()" class="w-full p-2 bg-yellow-50 border border-yellow-200 text-yellow-900 rounded-lg outline-none font-bold text-sm">
-                                </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-blue-800 mb-1">📅 目標月份 (預熱)</label>
-                            <select id="monthSelect" onchange="updateDynamicInspirations()" class="w-full p-2 bg-blue-50 border border-blue-200 text-blue-900 rounded-lg outline-none font-bold text-sm">
-                                <option value="1">1月</option><option value="2">2月</option><option value="3">3月</option>
-                                <option value="4">4月</option><option value="5">5月</option><option value="6">6月</option>
-                                <option value="7">7月</option><option value="8">8月</option><option value="9">9月</option>
-                                <option value="10">10月</option><option value="11">11月</option><option value="12">12月</option>
+                    <div>
+                        <label class="block text-sm font-bold text-comma mb-1">📍 0. 選擇發文分校</label>
+                        <select id="branchSelect" onchange="updateDynamicInspirations()" class="w-full p-2.5 bg-yellow-50 border border-yellow-200 text-yellow-900 rounded-lg outline-none font-bold text-sm">
                             </select>
-                        </div>
                     </div>
 
                     <div>
                         <label class="block text-sm font-bold text-gray-600 mb-1">1. 文案類型</label>
                         <select id="docType" onchange="updateDynamicInspirations()" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none text-sm">
-                            <option value="常態課程">常態課程與大考 (段考/會考/學測)</option>
-                            <option value="寒暑假營隊">寒暑假營隊與輔導</option>
-                            <option value="節慶">節慶與生活時事</option>
-                            <option value="品牌故事">品牌故事 (理念/日常)</option>
+                            <option value="常態課程">常態/核心課程推廣</option>
+                            <option value="招生檔期">重點招生/營隊檔期</option>
+                            <option value="節慶">節慶與時事</option>
                         </select>
                     </div>
 
                     <div class="bg-gray-50 p-3 rounded-lg border border-gray-200">
                         <div class="text-xs font-bold text-gray-500 mb-2 flex justify-between items-center">
-                            <span>✨ AI 智能靈感 (依據分校與月份推薦)</span>
-                            <span id="levelBadge" class="bg-comma text-white px-2 py-0.5 rounded text-[10px]">國小部</span>
+                            <span>✨ 靈感角落 (點擊帶入主題)</span>
+                            <span id="sysTimeBadge" class="text-blue-600 font-bold text-[10px]">自動偵測月份中...</span>
                         </div>
                         <div id="inspirationBox" class="flex flex-wrap gap-2">
                             </div>
@@ -96,8 +84,8 @@
                     </div>
                     
                     <div>
-                        <label class="block text-sm font-bold text-gray-600 mb-1">3. 關鍵訊息 & 痛點 (AI 將自動擴寫)</label>
-                        <textarea id="notes" rows="3" placeholder="例如：限額15名、強調老師的陪伴、附上報名連結" class="w-full p-2.5 bg-white border border-slate-300 rounded-lg outline-none text-sm leading-relaxed"></textarea>
+                        <label class="block text-sm font-bold text-red-600 mb-1">🚨 3. 關鍵訊息 & 在地細節 (強烈建議填寫)</label>
+                        <textarea id="notes" rows="4" placeholder="【魔法藏在細節裡】請務必寫上分校發生的真實故事或細節！\n\n❌ 錯誤示範：強調陪伴、快來報名。\n✅ 正確示範：今天旭日校發披薩慶祝段考結束，幾個國二男生笑得很開心，強調我們陪著孩子一起讀書一起玩。" class="w-full p-2.5 bg-red-50 border border-red-200 rounded-lg outline-none text-sm leading-relaxed placeholder-gray-400"></textarea>
                     </div>
                 </div>
 
@@ -121,15 +109,15 @@
                     <textarea id="outputArea" readonly class="w-full h-full min-h-[500px] p-4 bg-white border border-gray-200 rounded-lg text-gray-700 leading-relaxed resize-none focus:outline-none"></textarea>
                 </div>
                 <div class="p-4 bg-white border-t border-gray-100 flex justify-between items-center">
-                    <span class="text-xs text-gray-500 font-bold">✨ 已套用最新【逗點品牌故事】</span>
-                    <button onclick="copyCurrentOutput()" class="bg-gray-800 text-white px-6 py-2 rounded-lg text-sm font-bold hover:bg-gray-700 transition-all active:scale-95">📋 複製內容</button>
+                    <span id="hiddenDataMsg" class="text-xs text-blue-600 font-bold hidden">🔍 已自動注入專屬課程痛點與特色</span>
+                    <button onclick="copyCurrentOutput()" class="bg-gray-800 text-white px-6 py-2 rounded-lg text-sm font-bold hover:bg-gray-700 transition-all ml-auto">📋 複製內容</button>
                 </div>
             </div>
         </div>
     </main>
 
     <script>
-        // --- 1. 分校與部別資料庫 ---
+        // --- 1. 分校資料庫 ---
         const BRANCH_DATA = {
             "大園晨光校": { level: "ele", ig: "https://www.instagram.com/commaclass_sunrise/", phone: "03-386-8911", address: "桃園市大園區中正二街69號" },
             "青埔翱翔校": { level: "ele", ig: "https://www.instagram.com/commaclass_cp/", phone: "03-453-3073", address: "桃園市中壢區致遠一路208號" },
@@ -137,40 +125,84 @@
             "文化極光校": { level: "ele", ig: "https://www.instagram.com/commaclass_lights/", phone: "03-492-3140", address: "桃園市平鎮區復旦路二段150巷283號" },
             "內壢森耀校": { level: "ele", ig: "https://www.instagram.com/commaclass_glow/", phone: "03-435-7688", address: "桃園市中壢區忠勤街92號" },
             "竹北知行校": { level: "ele", ig: "https://www.instagram.com/commaclass_insight/", phone: "03-667-5429", address: "新竹縣竹北市十興路一段399號" },
-            
             "大園參天校": { level: "jun", ig: "https://instagram.com/commaclass_towering", phone: "03-384-0788", address: "桃園市大園區中山南路265號" },
             "園中方舟校": { level: "jun", ig: "https://www.instagram.com/commaclass_ark/", phone: "03-384-0850", address: "桃園市大園區大觀路995號" },
             "青埔旭日校": { level: "jun", ig: "https://instagram.com/commaclass_sun", phone: "03-422-9989", address: "桃園市中壢區領航北路二段339號4樓" },
             "中壢心夢想校": { level: "jun", ig: "https://www.instagram.com/commaclassdreamhigh/", phone: "03-427-3468", address: "桃園市中壢區中豐路49巷18弄25號" },
-            
             "青埔升大校": { level: "sen", ig: "https://www.instagram.com/commaclass_senior/", phone: "03-287-6849", address: "桃園市中壢區永信路261號" }
         };
 
         const LEVEL_NAMES = { "ele": "國小部", "jun": "國中部", "sen": "高中部" };
 
-        // --- 2. 一至十二月產銷節奏大腦 ---
-        const MONTHLY_RHYTHM = {
-            1: { fest: ["春節預熱"], ele: ["期末考複習"], jun: ["國一二寒假進度班", "國三寒訓/模擬考"], sen: ["高一二寒假輔導", "高三學測"] },
-            2: { fest: ["春節", "開學收心"], ele: ["下學期開學", "安親班招生"], jun: ["春季班開課", "會考倒數百日"], sen: ["下學期春季班"] },
-            3: { fest: ["兒童節活動預熱"], ele: ["兒童節活動"], jun: ["第一次段考複習"], sen: ["第一次段考"] },
-            4: { fest: ["兒童節", "母親節預熱"], ele: ["素養課程"], jun: ["國三會考衝刺/報名", "段考"], sen: [] },
-            5: { fest: ["母親節", "端午預熱"], ele: [], jun: ["國三會考", "國一二第二次段考"], sen: ["第二次段考"] },
-            6: { fest: ["端午節", "畢業季"], ele: ["期末考", "暑假營隊早鳥"], jun: ["國三畢業銜接高中", "國一二期末考"], sen: ["期末考"] },
-            7: { fest: ["父親節預熱"], ele: ["暑假營隊正式開跑"], jun: ["國一先修班", "暑期輔導"], sen: ["暑期輔導"] },
-            8: { fest: ["父親節"], ele: ["暑假營隊"], jun: ["暑期輔導"], sen: ["暑期輔導"] },
-            9: { fest: ["中秋節", "教師節"], ele: ["開學收心", "秋季安親"], jun: ["秋季班開學", "第一次段考預熱"], sen: ["秋季班開學"] },
-            10: { fest: ["雙十節", "萬聖節"], ele: [], jun: ["第一次段考"], sen: ["第一次段考"] },
-            11: { fest: ["感恩節", "聖誕預熱"], ele: ["期中考"], jun: ["第二次段考"], sen: ["第二次段考"] },
-            12: { fest: ["聖誕節", "跨年倒數"], ele: ["聖誕活動"], jun: ["會考倒數百日預熱", "期末考預熱"], sen: ["學測倒數", "期末考預熱"] }
+        // --- 2. 產銷節奏大腦 (1-12月) ---
+        const MONTHLY_CALENDAR = {
+            1: { fest: ["春節"], recruit: ["國一先修內招生", "寒假營隊"] },
+            2: { fest: ["春節", "開學"], recruit: ["國一先修外招生"] },
+            3: { fest: ["無特定節慶"], recruit: ["國小暑期營隊啟動", "國一先修外招生"] },
+            4: { fest: ["兒童節", "清明節"], recruit: ["國一先修外招生"] },
+            5: { fest: ["母親節"], recruit: ["國二/高二暑期營隊啟動"] },
+            6: { fest: ["端午節", "畢業季"], recruit: ["會考後銜接"] },
+            7: { fest: ["暑假開始"], recruit: ["暑期營隊", "暑期輔導"] },
+            8: { fest: ["父親節"], recruit: ["暑期營隊", "暑期輔導"] },
+            9: { fest: ["中秋節", "開學"], recruit: ["國小/中/高寒假營隊啟動"] },
+            10: { fest: ["雙十節", "萬聖節"], recruit: ["段考準備"] },
+            11: { fest: ["感恩節"], recruit: ["資優私中招生", "國一先修內招生"] },
+            12: { fest: ["聖誕節", "跨年"], recruit: ["小一先修啟動", "國一先修內招生", "高一贏領營"] }
+        };
+
+        // --- 3. 課程價值大數據 (隱形注入用) ---
+        const COURSE_DB = {
+            "創新全人素養班": {
+                features: "以品學為本，數學、美學、科學、文學五學並進。結合大型桌遊『我是CEO』，採用沉浸式教學打造『引導自學』的環境。",
+                pain: "學習領域發展不均衡，課業負擔重無法有效預習，面對大數字計算感到焦慮最後只能死背。",
+                results: "讓孩子成為『自己的主人』，學會尊重與感恩生命，成就全人發展。"
+            },
+            "黑洞科學": {
+                features: "每階段12單元不重複，一人一份實驗器材，將複雜的科學理論轉化為手作實驗。",
+                pain: "坊間科學課缺乏實體物容易失去熱情，傳統多以背誦為主缺乏思辨能力，大班授課孩子容易被忽略。",
+                results: "開啟科學好奇心，引導探究與思考，甚至能參與科展培訓。"
+            },
+            "科技作文": {
+                features: "觸控螢幕輔助教學，搭配範文導讀與具體評分標準，中高年級漸進式強化寫作。",
+                pain: "詞彙量不足不知如何下筆，結構鬆散，對寫作感到抗拒與挫折。",
+                results: "讓孩子從害怕寫作變成愛上寫作，文字與理解能力大幅提升。"
+            },
+            "資優鑑定私中培訓班": {
+                features: "專為私中設計教材，精緻小班，強調理解非盲目刷題，專業導師陪伴兼顧心理。",
+                pain: "大班制缺乏關注，過度刷題導致彈性疲乏，家長不知如何安排備考時程。",
+                results: "私校錄取率達九成，穩定學習節奏並兼顧全人發展心態。"
+            },
+            "國一先修": {
+                features: "暑假即完成國一首次段考九成進度，傳授各科筆記心法，舉辦態度翻轉戰逗營。",
+                pain: "擔心孩子無法適應國中課業與生活壓力，需要有溫度的引導。",
+                results: "超前進度建立自信，一段成績優異，成功建立家長極高信任感。"
+            },
+            "會考衝刺": {
+                features: "大量五科模擬題本實戰，傳授時間分配，要求製作專屬錯題本，安排廟宇祈福安定軍心。",
+                pain: "國三生面對大考範圍廣泛感到焦慮，不知如何統整複習。",
+                results: "全科無人考C，5A班全數達標，順利考取理想志願。"
+            },
+            "高中學測衝刺班": {
+                features: "依108課綱規劃主科循序漸進複習，每週定期測驗搭配錯題分析精準補強。",
+                pain: "高中課業繁重，缺乏系統化複習策略與時間管理能力。",
+                results: "模擬考成績逐步上升，透過繁星或申請入學錄取第一志願。"
+            }
+        };
+
+        // 常態課程選項對應表
+        const NORMAL_COURSES = {
+            "ele": ["創新全人素養班", "精修資優數學", "奧數選手班", "TEAMMS跨領域英語", "黑洞科學", "逗點閱思素養", "科技作文", "資優鑑定私中培訓班"],
+            "jun": ["國一先修", "國中數學進度/資優", "國中自然實驗", "國中英文素養", "會考衝刺", "科資競賽班"],
+            "sen": ["高中數學", "高中自然", "高中英文寫作", "高中國文", "高中學測衝刺班", "分科攻頂班"]
         };
 
         let isApiMode = false;
+        let currentMonth = new Date().getMonth() + 1; // 自動取得真實月份
 
         window.onload = function() {
             const savedKey = localStorage.getItem('comma_groq_key');
             if(savedKey) document.getElementById('apiKey').value = savedKey;
             
-            // 載入分校
             const branchSelect = document.getElementById('branchSelect');
             for (let key in BRANCH_DATA) {
                 let option = document.createElement("option");
@@ -178,11 +210,8 @@
                 branchSelect.appendChild(option);
             }
 
-            // 設定預設月份為當前真實月份
-            const currentMonth = new Date().getMonth() + 1;
-            document.getElementById('monthSelect').value = currentMonth;
+            document.getElementById('sysTimeBadge').innerText = `📅 系統自動偵測：現在是 ${currentMonth} 月`;
 
-            // 監聽模式切換
             document.getElementById('modeToggle').addEventListener('change', function(e) {
                 isApiMode = e.target.checked;
                 document.getElementById('modeDesc').innerText = isApiMode ? "目前：API 模式" : "目前：Prompt 模式";
@@ -192,7 +221,7 @@
                     : "w-full mt-6 bg-[#2d3b48] text-white font-bold py-3.5 rounded-xl shadow hover:opacity-90 transition-all";
             });
 
-            updateDynamicInspirations(); // 初始化靈感角落
+            updateDynamicInspirations();
         }
 
         function saveApiKey() {
@@ -200,59 +229,53 @@
             if(key) { localStorage.setItem('comma_groq_key', key); alert('已儲存！'); }
         }
 
-        // --- 核心大腦：動態更新靈感角落 ---
+        // --- 動態更新靈感角落 (強迫不寫入 Notes) ---
         function updateDynamicInspirations() {
             const branch = document.getElementById('branchSelect').value;
-            const level = BRANCH_DATA[branch].level; // 取得部別 (ele, jun, sen)
-            const month = parseInt(document.getElementById('monthSelect').value);
+            const level = BRANCH_DATA[branch].level; 
             const docType = document.getElementById('docType').value;
             const container = document.getElementById('inspirationBox');
-            
-            // 更新 UI 標籤
-            const badge = document.getElementById('levelBadge');
-            badge.innerText = LEVEL_NAMES[level];
-            badge.className = `text-white px-2 py-0.5 rounded text-[10px] font-bold ${level==='ele'?'bg-yellow-500':(level==='jun'?'bg-blue-500':'bg-red-500')}`;
+            const rhythm = MONTHLY_CALENDAR[currentMonth];
 
             container.innerHTML = '';
             let recommendations = [];
-            const currentRhythm = MONTHLY_RHYTHM[month];
 
-            // 根據類型與月份撈取數據
             if (docType === "節慶") {
-                recommendations = currentRhythm.fest.map(f => ({ t: f, n: "結合逗點陪伴理念，不只是祝賀，更要帶出教育意義。" }));
-            } 
-            else if (docType === "常態課程") {
-                recommendations = currentRhythm[level].map(c => ({ t: c, n: "強調我們的環境與老師如何接住孩子的情緒，不只是拚成績。" }));
-            }
-            else if (docType === "寒暑假營隊") {
-                if (month >= 5 && month <= 8) {
-                    recommendations = [{ t: level==="ele"?"國小暑期營隊":"暑期輔導/先修班", n: "強調假期不留白，從遊戲與陪伴中建立新學期的自信。" }];
-                } else if (month === 12 || month === 1) {
-                    recommendations = [{ t: level==="ele"?"冬令營":"寒假進度班", n: "短暫的寒假，是彎道超車與培養素養的最佳時機。" }];
-                } else {
-                    recommendations = [{ t: "目前非營隊主力宣傳期", n: "建議切換至常態課程或節慶" }];
-                }
-            }
-            else if (docType === "品牌故事") {
-                recommendations = [
-                    { t: "教室裡的感動瞬間", n: "分享一個孩子從排斥到接受學習的真實小故事" },
-                    { t: "給家長的一封信", n: "探討當前的教養焦慮，告訴家長『有逗點在，真好』" }
-                ];
+                recommendations = rhythm.fest;
+            } else if (docType === "招生檔期") {
+                recommendations = rhythm.recruit;
+            } else if (docType === "常態課程") {
+                recommendations = NORMAL_COURSES[level];
             }
 
-            // 渲染按鈕
-            if(recommendations.length === 0) recommendations = [{ t: "本月暫無特定排程", n: "請手動輸入您想宣傳的主題" }];
+            if(recommendations.length === 0) recommendations = ["本月暫無特殊排程，請手動輸入"];
             
             recommendations.forEach(item => {
                 const btn = document.createElement('button');
-                btn.className = "bg-white border border-gray-300 text-gray-700 text-xs px-2.5 py-1.5 rounded shadow-sm hover:bg-comma hover:text-white transition-all font-bold";
-                btn.innerText = item.t;
+                btn.className = "bg-white border border-gray-300 text-gray-700 text-xs px-3 py-1.5 rounded shadow-sm hover:bg-comma hover:text-white transition-all font-bold";
+                btn.innerText = item;
+                // 🚀 關鍵修改：只帶入 Topic，清空 Notes 強迫主任手寫
                 btn.onclick = () => {
-                    document.getElementById('topic').value = item.t;
-                    document.getElementById('notes').value = item.n;
+                    document.getElementById('topic').value = item;
+                    document.getElementById('notes').value = ""; 
+                    checkHiddenCourseData(item);
                 };
                 container.appendChild(btn);
             });
+        }
+
+        // 偵測是否觸發隱形資料庫
+        function checkHiddenCourseData(topicInput) {
+            const msg = document.getElementById('hiddenDataMsg');
+            let found = false;
+            for(let key in COURSE_DB) {
+                if(topicInput.includes(key)) found = true;
+            }
+            if(found) {
+                msg.classList.remove('hidden');
+            } else {
+                msg.classList.add('hidden');
+            }
         }
 
         function copyCurrentOutput() {
@@ -265,9 +288,24 @@
             const type = document.getElementById('docType').value;
             const topic = document.getElementById('topic').value.trim();
             const notes = document.getElementById('notes').value.trim();
-            const month = document.getElementById('monthSelect').value;
 
             if(!topic) return alert("請輸入「文案主題」！");
+            if(!notes) {
+                const confirmEmpty = confirm("🚨 警告：您的「關鍵訊息與在地細節」是空白的！\n\n如果沒有填寫細節，AI 產出的文案會變得像傳統補習班的「罐頭空話」，缺乏各分校的真實溫度。\n\n您確定要繼續產出嗎？(強烈建議按取消，回去補充一兩句真實故事)");
+                if(!confirmEmpty) return;
+            }
+
+            // --- 隱形武功秘笈注入邏輯 ---
+            let hiddenCoursePrompt = "";
+            for(let key in COURSE_DB) {
+                if(topic.includes(key) || notes.includes(key)) {
+                    hiddenCoursePrompt += `\n【系統自動注入：${key} 專屬課程價值】\n`;
+                    hiddenCoursePrompt += `- 課程特色：${COURSE_DB[key].features}\n`;
+                    hiddenCoursePrompt += `- 家長痛點：${COURSE_DB[key].pain}\n`;
+                    hiddenCoursePrompt += `- 關鍵成果：${COURSE_DB[key].results}\n`;
+                    hiddenCoursePrompt += `(⚠️ 寫作指令：請務必將上述的「家長痛點」與「課程特色」自然地揉合進文案的故事中，讓家長感到被理解。)\n`;
+                }
+            }
 
             const finalPrompt = `角色設定：
 你是「COMMA 逗點教室」的資深社群總監與生命教練。請完全吸收以下的品牌大腦，為我們撰寫一篇可以直接發布在 Facebook 的長文案。
@@ -290,11 +328,11 @@
 4. 溫暖呼籲 (CTA)：自然引導行動，附 3-5 個 Hashtag。
 
 【本次任務需求】
-目標發布月份：${month}月
-發布分校部別：${LEVEL_NAMES[branchInfo.level]} (${branchInfo.name})
+發布分校：${LEVEL_NAMES[branchInfo.level]} (${branchInfo.name})
 文案類型：${type}
 文案主題：${topic}
-關鍵訊息與備註：${notes}
+在地細節/關鍵訊息：${notes ? notes : "無提供細節，請依據品牌精神自由發揮"}
+${hiddenCoursePrompt}
 
 【輸出格式最終限制】
 1. 直接輸出純文字貼文，不加開場廢話，禁用 JSON 或 Markdown 區塊。
