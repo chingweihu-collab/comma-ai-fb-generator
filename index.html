@@ -3,21 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>逗點教室 | AI 品牌文案自動化產線 (FB 專武版)</title>
+    <title>逗點教室 | AI 品牌文案自動化產線 (V6 策略大腦版)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        :root {
-            --comma-hq: #2d3b48;
-            --comma-yellow: #ffd600;
-        }
+        :root { --comma-hq: #2d3b48; --comma-yellow: #ffd600; }
         body { font-family: 'Microsoft JhengHei', sans-serif; background-color: #f8fafc; }
         .bg-comma { background-color: var(--comma-hq); }
         .text-comma { color: var(--comma-hq); }
-        
-        /* Toggle Switch CSS */
         .toggle-checkbox:checked { right: 0; border-color: #10a978; }
         .toggle-checkbox:checked + .toggle-label { background-color: #10a978; }
-        
         .loader { border-top-color: var(--comma-hq); -webkit-animation: spinner 1.5s linear infinite; animation: spinner 1.5s linear infinite; }
         @keyframes spinner { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
@@ -30,13 +24,12 @@
                 <span class="text-2xl">🔥</span>
                 <div>
                     <h1 class="text-xl font-bold tracking-wider">COMMA 逗點教室</h1>
-                    <p class="text-xs text-gray-300">品牌內容自動化產線 v5.0 (全分校整合版)</p>
+                    <p class="text-xs text-gray-300">品牌內容自動化產線 v6.0 (策略大腦版)</p>
                 </div>
             </div>
-            
             <div class="flex items-center gap-2 bg-slate-700 p-2 rounded-lg w-full md:w-auto">
                 <span class="text-xs font-bold text-gray-300 whitespace-nowrap">API Key:</span>
-                <input type="password" id="apiKey" placeholder="Groq API Key (gsk_...)" class="text-sm p-1 px-2 rounded text-black w-full md:w-48 outline-none">
+                <input type="password" id="apiKey" placeholder="Groq API Key" class="text-sm p-1 px-2 rounded text-black w-full md:w-48 outline-none">
                 <button onclick="saveApiKey()" class="text-xs bg-slate-600 hover:bg-slate-500 px-3 py-1.5 rounded text-white font-bold transition">儲存</button>
             </div>
         </div>
@@ -44,9 +37,9 @@
 
     <main class="container mx-auto px-4 py-6 flex-grow grid grid-cols-1 lg:grid-cols-12 gap-6">
         
-        <div class="lg:col-span-5 space-y-6">
+        <div class="lg:col-span-5 space-y-5">
             
-            <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex justify-between items-center">
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex justify-between items-center">
                 <div>
                     <h3 class="font-bold text-gray-800">運作模式</h3>
                     <p class="text-xs text-gray-500" id="modeDesc">目前：產出 Prompt 供手動複製</p>
@@ -58,225 +51,201 @@
             </div>
 
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                <h3 class="font-bold text-gray-800 mb-4 border-l-4 border-comma-hq pl-2" style="border-color: #2d3b48;">FB 文案需求設定</h3>
+                <h3 class="font-bold text-gray-800 mb-4 border-l-4 border-comma-hq pl-2">策略文案需求設定</h3>
                 
                 <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-bold text-comma mb-1">📍 0. 選擇發文分校 (將自動帶入專屬資訊)</label>
-                        <select id="branchSelect" class="w-full p-2.5 bg-yellow-50 border border-yellow-200 text-yellow-900 rounded-lg focus:ring-2 focus:ring-[#ffd600] outline-none font-bold">
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-bold text-comma mb-1">📍 0. 選擇分校</label>
+                            <select id="branchSelect" onchange="updateDynamicInspirations()" class="w-full p-2 bg-yellow-50 border border-yellow-200 text-yellow-900 rounded-lg outline-none font-bold text-sm">
+                                </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-blue-800 mb-1">📅 目標月份 (預熱)</label>
+                            <select id="monthSelect" onchange="updateDynamicInspirations()" class="w-full p-2 bg-blue-50 border border-blue-200 text-blue-900 rounded-lg outline-none font-bold text-sm">
+                                <option value="1">1月</option><option value="2">2月</option><option value="3">3月</option>
+                                <option value="4">4月</option><option value="5">5月</option><option value="6">6月</option>
+                                <option value="7">7月</option><option value="8">8月</option><option value="9">9月</option>
+                                <option value="10">10月</option><option value="11">11月</option><option value="12">12月</option>
                             </select>
+                        </div>
                     </div>
 
                     <div>
                         <label class="block text-sm font-bold text-gray-600 mb-1">1. 文案類型</label>
-                        <select id="docType" onchange="loadInspirations()" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#2d3b48] outline-none">
-                            <option value="產品介紹">產品介紹 (推新品、新課程)</option>
-                            <option value="促銷活動">促銷活動 (限時優惠、節日特惠)</option>
-                            <option value="品牌故事">品牌故事 (品牌理念、創辦人故事)</option>
-                            <option value="互動問答">互動問答 (提問、投票、UGC)</option>
-                            <option value="節日借勢">節日借勢 (節慶結合品牌)</option>
+                        <select id="docType" onchange="updateDynamicInspirations()" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none text-sm">
+                            <option value="常態課程">常態課程與大考 (段考/會考/學測)</option>
+                            <option value="寒暑假營隊">寒暑假營隊與輔導</option>
+                            <option value="節慶">節慶與生活時事</option>
+                            <option value="品牌故事">品牌故事 (理念/日常)</option>
                         </select>
                     </div>
 
-                    <div class="bg-yellow-50 p-3 rounded-lg border border-yellow-100">
-                        <div class="text-xs font-bold text-yellow-800 mb-2 flex items-center gap-1">✨ 靈感角落 (點擊直接帶入)</div>
+                    <div class="bg-gray-50 p-3 rounded-lg border border-gray-200">
+                        <div class="text-xs font-bold text-gray-500 mb-2 flex justify-between items-center">
+                            <span>✨ AI 智能靈感 (依據分校與月份推薦)</span>
+                            <span id="levelBadge" class="bg-comma text-white px-2 py-0.5 rounded text-[10px]">國小部</span>
+                        </div>
                         <div id="inspirationBox" class="flex flex-wrap gap-2">
                             </div>
                     </div>
 
                     <div>
                         <label class="block text-sm font-bold text-gray-600 mb-1">2. 文案主題</label>
-                        <input type="text" id="topic" placeholder="例如：國三贏戰會考衝刺班" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#2d3b48] outline-none">
+                        <input type="text" id="topic" placeholder="請點擊上方靈感，或手動輸入" class="w-full p-2.5 bg-white border border-slate-300 rounded-lg outline-none font-bold text-comma">
                     </div>
                     
                     <div>
-                        <label class="block text-sm font-bold text-gray-600 mb-1">3. 關鍵訊息 & 備註</label>
-                        <textarea id="notes" rows="3" placeholder="例如：限額15名、強調老師的陪伴、附上報名連結" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#2d3b48] outline-none"></textarea>
+                        <label class="block text-sm font-bold text-gray-600 mb-1">3. 關鍵訊息 & 痛點 (AI 將自動擴寫)</label>
+                        <textarea id="notes" rows="3" placeholder="例如：限額15名、強調老師的陪伴、附上報名連結" class="w-full p-2.5 bg-white border border-slate-300 rounded-lg outline-none text-sm leading-relaxed"></textarea>
                     </div>
                 </div>
 
-                <button id="generateBtn" onclick="processGeneration()" class="w-full mt-6 bg-comma text-white font-bold py-3.5 rounded-xl shadow-lg hover:opacity-90 active:scale-95 transition-all flex justify-center items-center gap-2">
-                    <span>🚀 產出 FB 專屬 Prompt</span>
+                <button id="generateBtn" onclick="processGeneration()" class="w-full mt-6 bg-[#2d3b48] text-white font-bold py-3.5 rounded-xl shadow hover:opacity-90 active:scale-95 transition-all">
+                    🚀 產出 FB 專屬 Prompt
                 </button>
             </div>
         </div>
 
         <div class="lg:col-span-7 flex flex-col">
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 flex-grow flex flex-col overflow-hidden">
-                
                 <div class="bg-[#f1f5f9] border-b border-gray-200 py-3 px-4 flex justify-between items-center">
                     <span class="font-bold text-comma">Facebook 專屬產出結果</span>
                     <span class="text-xs bg-comma text-white px-2 py-1 rounded">300-350字限定</span>
                 </div>
-
                 <div class="p-6 flex-grow bg-slate-50 relative">
                     <div id="loadingUI" class="hidden absolute inset-0 bg-slate-50 bg-opacity-90 flex flex-col justify-center items-center z-10">
                         <div class="loader border-4 border-gray-200 rounded-full w-12 h-12 mb-4"></div>
                         <p class="text-comma font-bold animate-pulse">逗點品牌大腦運算中，請稍候...</p>
                     </div>
-
-                    <textarea id="outputArea" readonly class="w-full h-full min-h-[500px] p-4 bg-white border border-gray-200 rounded-lg text-gray-700 leading-relaxed resize-none focus:outline-none focus:ring-1 focus:ring-gray-300"></textarea>
+                    <textarea id="outputArea" readonly class="w-full h-full min-h-[500px] p-4 bg-white border border-gray-200 rounded-lg text-gray-700 leading-relaxed resize-none focus:outline-none"></textarea>
                 </div>
-
                 <div class="p-4 bg-white border-t border-gray-100 flex justify-between items-center">
-                    <span class="text-xs text-gray-500 font-bold">✨ 已套用最新【逗點品牌故事】與【理想客戶輪廓】</span>
-                    <button onclick="copyCurrentOutput()" class="bg-gray-800 text-white px-6 py-2 rounded-lg text-sm font-bold hover:bg-gray-700 shadow transition-all active:scale-95">
-                        📋 複製內容
-                    </button>
+                    <span class="text-xs text-gray-500 font-bold">✨ 已套用最新【逗點品牌故事】</span>
+                    <button onclick="copyCurrentOutput()" class="bg-gray-800 text-white px-6 py-2 rounded-lg text-sm font-bold hover:bg-gray-700 transition-all active:scale-95">📋 複製內容</button>
                 </div>
             </div>
         </div>
     </main>
 
     <script>
-        // ==========================================
-        // 🚨 逗點 11 間分校資料庫 (完整整合版)
-        // ==========================================
+        // --- 1. 分校與部別資料庫 ---
         const BRANCH_DATA = {
-            "青埔翱翔校": {
-                name: "青埔翱翔校",
-                ig: "https://www.instagram.com/commaclass_cp/",
-                phone: "03-453-3073",
-                address: "桃園市中壢區致遠一路208號"
-            },
-            "青園展翅校": {
-                name: "青園展翅校",
-                ig: "https://www.instagram.com/commaclass_soar/",
-                phone: "03-287-3931",
-                address: "桃園市大園區大勇路33號"
-            },
-            "文化極光校": {
-                name: "文化極光校",
-                ig: "https://www.instagram.com/commaclass_lights/",
-                phone: "03-492-3140",
-                address: "桃園市平鎮區復旦路二段150巷283號"
-            },
-            "大園晨光校": {
-                name: "大園晨光校",
-                ig: "https://www.instagram.com/commaclass_sunrise/",
-                phone: "03-386-8911",
-                address: "桃園市大園區中正二街69號"
-            },
-            "大園參天校": {
-                name: "大園參天校",
-                ig: "https://instagram.com/commaclass_towering",
-                phone: "03-384-0788",
-                address: "桃園市大園區中山南路265號"
-            },
-            "內壢森耀校": {
-                name: "內壢森耀校",
-                ig: "https://www.instagram.com/commaclass_glow/",
-                phone: "03-435-7688",
-                address: "桃園市中壢區忠勤街92號"
-            },
-            "竹北知行校": {
-                name: "竹北知行校",
-                ig: "https://www.instagram.com/commaclass_insight/",
-                phone: "03-667-5429",
-                address: "新竹縣竹北市十興路一段399號"
-            },
-            "園中方舟校": {
-                name: "園中方舟校",
-                ig: "https://www.instagram.com/commaclass_ark/",
-                phone: "03-384-0850",
-                address: "桃園市大園區大觀路995號"
-            },
-            "青埔旭日校": {
-                name: "青埔旭日校",
-                ig: "https://instagram.com/commaclass_sun",
-                phone: "03-422-9989",
-                address: "桃園市中壢區領航北路二段339號4樓"
-            },
-            "中壢心夢想校": {
-                name: "中壢心夢想校",
-                ig: "https://www.instagram.com/commaclassdreamhigh/",
-                phone: "03-427-3468",
-                address: "桃園市中壢區中豐路49巷18弄25號"
-            },
-            "青埔升大校": {
-                name: "青埔升大校",
-                ig: "https://www.instagram.com/commaclass_senior/",
-                phone: "03-287-6849",
-                address: "桃園市中壢區永信路261號"
-            }
+            "大園晨光校": { level: "ele", ig: "https://www.instagram.com/commaclass_sunrise/", phone: "03-386-8911", address: "桃園市大園區中正二街69號" },
+            "青埔翱翔校": { level: "ele", ig: "https://www.instagram.com/commaclass_cp/", phone: "03-453-3073", address: "桃園市中壢區致遠一路208號" },
+            "青園展翅校": { level: "ele", ig: "https://www.instagram.com/commaclass_soar/", phone: "03-287-3931", address: "桃園市大園區大勇路33號" },
+            "文化極光校": { level: "ele", ig: "https://www.instagram.com/commaclass_lights/", phone: "03-492-3140", address: "桃園市平鎮區復旦路二段150巷283號" },
+            "內壢森耀校": { level: "ele", ig: "https://www.instagram.com/commaclass_glow/", phone: "03-435-7688", address: "桃園市中壢區忠勤街92號" },
+            "竹北知行校": { level: "ele", ig: "https://www.instagram.com/commaclass_insight/", phone: "03-667-5429", address: "新竹縣竹北市十興路一段399號" },
+            
+            "大園參天校": { level: "jun", ig: "https://instagram.com/commaclass_towering", phone: "03-384-0788", address: "桃園市大園區中山南路265號" },
+            "園中方舟校": { level: "jun", ig: "https://www.instagram.com/commaclass_ark/", phone: "03-384-0850", address: "桃園市大園區大觀路995號" },
+            "青埔旭日校": { level: "jun", ig: "https://instagram.com/commaclass_sun", phone: "03-422-9989", address: "桃園市中壢區領航北路二段339號4樓" },
+            "中壢心夢想校": { level: "jun", ig: "https://www.instagram.com/commaclassdreamhigh/", phone: "03-427-3468", address: "桃園市中壢區中豐路49巷18弄25號" },
+            
+            "青埔升大校": { level: "sen", ig: "https://www.instagram.com/commaclass_senior/", phone: "03-287-6849", address: "桃園市中壢區永信路261號" }
         };
 
-        // --- 靈感角落資料 ---
-        const INSPIRATIONS = {
-            "產品介紹": [
-                { t: "國一新鮮人先修班", n: "強調幫助孩子無痛銜接國中，減少焦慮" },
-                { t: "閱思素養新課程", n: "針對108課綱，培養長文閱讀與批判思考" },
-                { t: "國三贏戰會考衝刺", n: "不是死讀書，是團隊一起熱血闖關變強" }
-            ],
-            "促銷活動": [
-                { t: "春季班早鳥優惠", n: "限額15名，強調小班制高品質陪伴" },
-                { t: "兩人同行試聽活動", n: "鼓勵帶好朋友一起來體驗逗點境教" },
-                { t: "段考複習週免費入場", n: "開放社區國中生來感受逗點的讀書氛圍" }
-            ],
-            "品牌故事": [
-                { t: "天花板的『品』字", n: "分享教室裝潢理念，品格永遠高於成績" },
-                { t: "老師的一封信", n: "分享老師陪孩子面對段考挫折的心路歷程" },
-                { t: "為什麼堅持小班制", n: "因為我們要看見每一個孩子的眼神" }
-            ],
-            "互動問答": [
-                { t: "孩子回家不說話怎麼辦", n: "分享正向教養的『從衝突中學會表達』" },
-                { t: "快樂與成績能兼顧嗎", n: "拋出問題讓家長留言，宣導熱血學習觀" }
-            ],
-            "節日借勢": [
-                { t: "母親節感謝文", n: "感謝逗爸逗媽的付出，我們一起守護孩子" },
-                { t: "會考前夕祝福", n: "給國三生打氣，不要怕，我們都在" },
-                { t: "開學收心操", n: "溫柔提醒作息調整，用期待代替壓力" }
-            ]
+        const LEVEL_NAMES = { "ele": "國小部", "jun": "國中部", "sen": "高中部" };
+
+        // --- 2. 一至十二月產銷節奏大腦 ---
+        const MONTHLY_RHYTHM = {
+            1: { fest: ["春節預熱"], ele: ["期末考複習"], jun: ["國一二寒假進度班", "國三寒訓/模擬考"], sen: ["高一二寒假輔導", "高三學測"] },
+            2: { fest: ["春節", "開學收心"], ele: ["下學期開學", "安親班招生"], jun: ["春季班開課", "會考倒數百日"], sen: ["下學期春季班"] },
+            3: { fest: ["兒童節活動預熱"], ele: ["兒童節活動"], jun: ["第一次段考複習"], sen: ["第一次段考"] },
+            4: { fest: ["兒童節", "母親節預熱"], ele: ["素養課程"], jun: ["國三會考衝刺/報名", "段考"], sen: [] },
+            5: { fest: ["母親節", "端午預熱"], ele: [], jun: ["國三會考", "國一二第二次段考"], sen: ["第二次段考"] },
+            6: { fest: ["端午節", "畢業季"], ele: ["期末考", "暑假營隊早鳥"], jun: ["國三畢業銜接高中", "國一二期末考"], sen: ["期末考"] },
+            7: { fest: ["父親節預熱"], ele: ["暑假營隊正式開跑"], jun: ["國一先修班", "暑期輔導"], sen: ["暑期輔導"] },
+            8: { fest: ["父親節"], ele: ["暑假營隊"], jun: ["暑期輔導"], sen: ["暑期輔導"] },
+            9: { fest: ["中秋節", "教師節"], ele: ["開學收心", "秋季安親"], jun: ["秋季班開學", "第一次段考預熱"], sen: ["秋季班開學"] },
+            10: { fest: ["雙十節", "萬聖節"], ele: [], jun: ["第一次段考"], sen: ["第一次段考"] },
+            11: { fest: ["感恩節", "聖誕預熱"], ele: ["期中考"], jun: ["第二次段考"], sen: ["第二次段考"] },
+            12: { fest: ["聖誕節", "跨年倒數"], ele: ["聖誕活動"], jun: ["會考倒數百日預熱", "期末考預熱"], sen: ["學測倒數", "期末考預熱"] }
         };
 
-        // --- 狀態變數 ---
         let isApiMode = false;
-        let outputData = '';
 
-        // --- 初始化 ---
         window.onload = function() {
             const savedKey = localStorage.getItem('comma_groq_key');
             if(savedKey) document.getElementById('apiKey').value = savedKey;
             
-            // 動態載入 11 間分校選單
+            // 載入分校
             const branchSelect = document.getElementById('branchSelect');
             for (let key in BRANCH_DATA) {
                 let option = document.createElement("option");
-                option.value = key;
-                option.text = key;
+                option.value = key; option.text = key;
                 branchSelect.appendChild(option);
             }
 
+            // 設定預設月份為當前真實月份
+            const currentMonth = new Date().getMonth() + 1;
+            document.getElementById('monthSelect').value = currentMonth;
+
+            // 監聽模式切換
             document.getElementById('modeToggle').addEventListener('change', function(e) {
                 isApiMode = e.target.checked;
-                document.getElementById('modeDesc').innerText = isApiMode ? "目前：API 模式 (直接產出 FB 貼文)" : "目前：Prompt 模式 (產出指令供複製)";
+                document.getElementById('modeDesc').innerText = isApiMode ? "目前：API 模式" : "目前：Prompt 模式";
                 document.getElementById('generateBtn').innerHTML = isApiMode ? "✨ 呼叫 Llama3.3 產出 FB 貼文" : "🚀 產出 FB 專屬 Prompt";
                 document.getElementById('generateBtn').className = isApiMode 
-                    ? "w-full mt-6 bg-[#10a978] text-white font-bold py-3.5 rounded-xl shadow-lg hover:opacity-90 active:scale-95 transition-all"
-                    : "w-full mt-6 bg-[#2d3b48] text-white font-bold py-3.5 rounded-xl shadow-lg hover:opacity-90 active:scale-95 transition-all";
+                    ? "w-full mt-6 bg-[#10a978] text-white font-bold py-3.5 rounded-xl shadow hover:opacity-90 transition-all"
+                    : "w-full mt-6 bg-[#2d3b48] text-white font-bold py-3.5 rounded-xl shadow hover:opacity-90 transition-all";
             });
 
-            loadInspirations();
+            updateDynamicInspirations(); // 初始化靈感角落
         }
 
         function saveApiKey() {
             const key = document.getElementById('apiKey').value.trim();
-            if(key) {
-                localStorage.setItem('comma_groq_key', key);
-                alert('Groq API Key 已儲存至瀏覽器！');
-            } else {
-                alert('請先輸入 API Key');
-            }
+            if(key) { localStorage.setItem('comma_groq_key', key); alert('已儲存！'); }
         }
 
-        function loadInspirations() {
-            const type = document.getElementById('docType').value;
+        // --- 核心大腦：動態更新靈感角落 ---
+        function updateDynamicInspirations() {
+            const branch = document.getElementById('branchSelect').value;
+            const level = BRANCH_DATA[branch].level; // 取得部別 (ele, jun, sen)
+            const month = parseInt(document.getElementById('monthSelect').value);
+            const docType = document.getElementById('docType').value;
             const container = document.getElementById('inspirationBox');
-            container.innerHTML = '';
             
-            INSPIRATIONS[type].forEach(item => {
+            // 更新 UI 標籤
+            const badge = document.getElementById('levelBadge');
+            badge.innerText = LEVEL_NAMES[level];
+            badge.className = `text-white px-2 py-0.5 rounded text-[10px] font-bold ${level==='ele'?'bg-yellow-500':(level==='jun'?'bg-blue-500':'bg-red-500')}`;
+
+            container.innerHTML = '';
+            let recommendations = [];
+            const currentRhythm = MONTHLY_RHYTHM[month];
+
+            // 根據類型與月份撈取數據
+            if (docType === "節慶") {
+                recommendations = currentRhythm.fest.map(f => ({ t: f, n: "結合逗點陪伴理念，不只是祝賀，更要帶出教育意義。" }));
+            } 
+            else if (docType === "常態課程") {
+                recommendations = currentRhythm[level].map(c => ({ t: c, n: "強調我們的環境與老師如何接住孩子的情緒，不只是拚成績。" }));
+            }
+            else if (docType === "寒暑假營隊") {
+                if (month >= 5 && month <= 8) {
+                    recommendations = [{ t: level==="ele"?"國小暑期營隊":"暑期輔導/先修班", n: "強調假期不留白，從遊戲與陪伴中建立新學期的自信。" }];
+                } else if (month === 12 || month === 1) {
+                    recommendations = [{ t: level==="ele"?"冬令營":"寒假進度班", n: "短暫的寒假，是彎道超車與培養素養的最佳時機。" }];
+                } else {
+                    recommendations = [{ t: "目前非營隊主力宣傳期", n: "建議切換至常態課程或節慶" }];
+                }
+            }
+            else if (docType === "品牌故事") {
+                recommendations = [
+                    { t: "教室裡的感動瞬間", n: "分享一個孩子從排斥到接受學習的真實小故事" },
+                    { t: "給家長的一封信", n: "探討當前的教養焦慮，告訴家長『有逗點在，真好』" }
+                ];
+            }
+
+            // 渲染按鈕
+            if(recommendations.length === 0) recommendations = [{ t: "本月暫無特定排程", n: "請手動輸入您想宣傳的主題" }];
+            
+            recommendations.forEach(item => {
                 const btn = document.createElement('button');
-                btn.className = "bg-white border border-yellow-300 text-yellow-800 text-xs px-2 py-1 rounded hover:bg-yellow-100 transition";
+                btn.className = "bg-white border border-gray-300 text-gray-700 text-xs px-2.5 py-1.5 rounded shadow-sm hover:bg-comma hover:text-white transition-all font-bold";
                 btn.innerText = item.t;
                 btn.onclick = () => {
                     document.getElementById('topic').value = item.t;
@@ -287,56 +256,50 @@
         }
 
         function copyCurrentOutput() {
-            const text = document.getElementById('outputArea').value;
-            if(!text || text.includes('請在左側')) return alert('沒有內容可複製！');
-            navigator.clipboard.writeText(text).then(() => alert('已成功複製到剪貼簿！'));
+            navigator.clipboard.writeText(document.getElementById('outputArea').value).then(() => alert('已複製！'));
         }
 
-        // --- 核心處理邏輯 ---
         async function processGeneration() {
             const branch = document.getElementById('branchSelect').value;
             const branchInfo = BRANCH_DATA[branch];
             const type = document.getElementById('docType').value;
             const topic = document.getElementById('topic').value.trim();
             const notes = document.getElementById('notes').value.trim();
+            const month = document.getElementById('monthSelect').value;
 
             if(!topic) return alert("請輸入「文案主題」！");
 
-            // 史上最強 FB 專屬 Prompt (含 300-350 字限制與動態分校資訊)
             const finalPrompt = `角色設定：
-你是「COMMA 逗點教室」的資深社群總監與生命教練。你的文字充滿溫度與熱血，像是一位理解家長焦慮、陪伴孩子成長的「大人朋友」。請完全吸收以下的品牌大腦，為我們撰寫一篇可以直接發布在 Facebook 的長文案。
+你是「COMMA 逗點教室」的資深社群總監與生命教練。請完全吸收以下的品牌大腦，為我們撰寫一篇可以直接發布在 Facebook 的長文案。
 
 【逗點品牌大腦與核心靈魂】
-1. 品牌定位與使命：我們不是成績加工廠，而是「教育基地」。使命是「接住每一個孩子」，提供安心停頓與充能的溫暖空間。
-2. 核心價值：
-   - 陪伴大於成績：拒絕分數綁架，相信有溫度的陪伴才是最強大的力量。
-   - 全人發展與境教：境教重於身教，用熱血積極的氛圍培養品格。
-   - 善的循環與家的歸屬感：我們是生命教練，營造「有你在，真好」的第二個家。
-3. 目標受眾 (Persona)：桃園青埔、中壢區，35-50歲重視質感與全人教育的雙薪家長。
-4. 家長痛點：害怕孩子失去笑容、擔心高分低能、討厭大補習班的冷漠、更怕因為逼迫讀書而撕裂親子關係。
+1. 品牌定位：不是成績加工廠，而是「教育基地」。使命是「接住每一個孩子」。
+2. 核心價值：陪伴大於成績、全人發展與境教、善的循環。
+3. 受眾：35-50歲重視質感的現代家長。痛點是怕孩子失去笑容、怕撕裂親子關係。
 
-【寫作風格與禁忌（🚨極度重要，請嚴格遵守）】
-- 語氣：溫暖真誠、熱血正向、專業堅定。不帶批判，讓讀者感到「被接住」。
-- 常用句型：多用「從...中...」、「先...再...」、「讓我們一起...」、「不只是...更是...」。
-- 禁用詞彙（絕對禁止）：恐嚇行銷（落後別人、輸在起跑點）、冰冷詞彙（保證班、滿分狀元、填鴨）、上對下說教（你應該要）、廉價促銷。
-- 稱呼限制：不稱呼自己為「補習班」，請用「逗點」、「教育基地」或「大人朋友」。稱呼家長為「逗爸逗媽」。
-- 排版與符號：段落之間必定留白（空行）。適度且克制地使用溫暖的 Emoji (如：💛, ✨, 🫶🏻, 🤜🏻🤛🏻, 🔥)。資訊整理愛用直線 ｜。
+【寫作風格與禁忌】
+- 語氣：溫暖真誠、熱血正向、專業堅定。
+- 禁用詞彙：恐嚇行銷(落後別人)、冰冷詞彙(保證班、滿分狀元)、上對下說教。
+- 稱呼：請用「逗點」、「教育基地」或「大人朋友」。稱呼家長為「逗爸逗媽」。
+- 排版：段落必定留白(空行)。適度使用溫暖 Emoji (💛, ✨, 🫶🏻, 🤜🏻🤛🏻, 🔥)。
 
-【FB 專屬爆款貼文骨架】
-請嚴格依照以下四個段落結構撰寫，並請將「正文總字數」精準控制在 300 到 350 字之間（不含最下方的固定結尾）：
-1. 破題金句 (Hook)：用一句話精準戳中家長痛點或引發感性共鳴，標題前後必須用 ◤ ◢ 包起來。
-2. 痛點同理 (Story)：生動描述一個真實的教養/學習痛點場景。
-3. 逗點解法 (Solution)：帶入逗點「陪伴大於成績」或「境教」的理念，說明我們將如何接住孩子，化解焦慮。
-4. 溫暖呼籲 (CTA)：自然地引導家長採取行動，並附上 3-5 個相關的 Hashtag。
+【FB 專屬爆款貼文骨架 (正文300-350字)】
+1. 破題金句 (Hook)：用一句話戳中痛點或共鳴，標題前後必須用 ◤ ◢ 包起來。
+2. 痛點同理 (Story)：生動描述真實教養場景。
+3. 逗點解法 (Solution)：帶入「陪伴」或「境教」理念。
+4. 溫暖呼籲 (CTA)：自然引導行動，附 3-5 個 Hashtag。
 
-【本次任務具體需求】
+【本次任務需求】
+目標發布月份：${month}月
+發布分校部別：${LEVEL_NAMES[branchInfo.level]} (${branchInfo.name})
 文案類型：${type}
 文案主題：${topic}
 關鍵訊息與備註：${notes}
 
 【輸出格式最終限制】
-1. 請直接輸出最終的 FB 貼文內容，不要加上任何開場白或結語廢話，也不要使用任何程式碼區塊 (markdown) 或 JSON 格式。
-2. 請一字不漏地將下方【】內的固定結尾，接在文案的最後面，不可做任何修改：
+1. 直接輸出純文字貼文，不加開場廢話，禁用 JSON 或 Markdown 區塊。
+2. 請在文案的最末端，直接接上以下的「固定結尾資訊」（請不要加上任何外框或括號）：
+
 ⸻⸻⸻⸻⸻⸻
 「逗點，是一個創新的起點。」
  逗點官網｜https://www.comma.study
@@ -346,48 +309,26 @@
 `;
 
             if (!isApiMode) {
-                // Prompt 模式
-                const msg = `【請直接複製以下內容，貼給 ChatGPT 或 Claude】\n\n------------------------\n\n${finalPrompt}`;
-                document.getElementById('outputArea').value = msg;
+                document.getElementById('outputArea').value = `【請複製以下內容貼給 ChatGPT】\n\n------------------------\n\n${finalPrompt}`;
             } else {
-                // API 模式 (Groq)
                 const apiKey = document.getElementById('apiKey').value.trim();
-                if(!apiKey || !apiKey.startsWith('gsk_')) {
-                    alert('請輸入有效的 Groq API Key！');
-                    return;
-                }
-
+                if(!apiKey) return alert('請先輸入 API Key！');
                 document.getElementById('loadingUI').classList.remove('hidden');
                 
                 try {
-                    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+                    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${apiKey}`
-                        },
+                        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
                         body: JSON.stringify({
                             model: 'llama-3.3-70b-versatile',
-                            messages: [
-                                { role: 'user', content: finalPrompt }
-                            ],
+                            messages: [{ role: 'user', content: finalPrompt }],
                             temperature: 0.7
                         })
                     });
-
-                    if (!response.ok) {
-                        const errorData = await response.json();
-                        throw new Error(`Groq API 錯誤：${errorData.error?.message || '未知錯誤'}`);
-                    }
-
-                    const data = await response.json();
-                    let rawText = data.choices[0].message.content;
-                    
-                    document.getElementById('outputArea').value = rawText.trim();
-                    
-                } catch (error) {
-                    console.error(error);
-                    alert('發生錯誤：\n' + error.message);
+                    const data = await res.json();
+                    document.getElementById('outputArea').value = data.choices[0].message.content.trim();
+                } catch (err) {
+                    alert('發生錯誤：' + err.message);
                 } finally {
                     document.getElementById('loadingUI').classList.add('hidden');
                 }
