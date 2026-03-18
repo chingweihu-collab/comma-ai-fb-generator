@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>逗點教室 | AI 品牌文案自動化產線 (V6.3 潤飾進化版)</title>
+    <title>逗點教室 | AI 品牌文案自動化產線 (V6.4 終極無蟲版)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root { --comma-hq: #2d3b48; --comma-yellow: #ffd600; }
@@ -24,7 +24,7 @@
                 <span class="text-2xl">🔥</span>
                 <div>
                     <h1 class="text-xl font-bold tracking-wider">COMMA 逗點教室</h1>
-                    <p class="text-xs text-gray-300">品牌內容自動化產線 v6.3 (潤飾進化版)</p>
+                    <p class="text-xs text-gray-300">品牌內容自動化產線 v6.4 (終極防護版)</p>
                 </div>
             </div>
             <div class="flex items-center gap-2 bg-slate-700 p-2 rounded-lg w-full md:w-auto">
@@ -72,9 +72,9 @@
                     <div class="bg-gray-50 p-3 rounded-lg border border-gray-200">
                         <div class="text-xs font-bold text-gray-500 mb-2 flex justify-between items-center">
                             <span>✨ 靈感角落 (點擊帶入主題)</span>
-                            <span id="sysTimeBadge" class="text-blue-600 font-bold text-[10px]">自動偵測月份中...</span>
+                            <span id="sysTimeBadge" class="text-blue-600 font-bold text-[10px]"></span>
                         </div>
-                        <div id="inspirationBox" class="flex flex-wrap gap-2">
+                        <div id="inspirationBox" class="flex flex-wrap gap-2 mt-2">
                             </div>
                     </div>
 
@@ -84,10 +84,11 @@
                     </div>
                     
                     <div>
-                        <label class="block text-sm font-bold text-red-600 mb-1">🚨 3. 關鍵訊息 & 在地細節 (強烈建議填寫)</label>
-                        <textarea id="notes" rows="5" placeholder="【魔法藏在細節裡】AI 會幫您把這些句子潤飾成漂亮的故事！
-❌ 錯誤示範：強調陪伴、快來報名。
-✅ 正確示範：今天旭日校發披薩慶祝段考，幾個國二生笑得很開心，陪著孩子一起讀書一起玩。" class="w-full p-2.5 bg-red-50 border border-red-200 rounded-lg outline-none text-sm leading-relaxed placeholder-gray-400"></textarea>
+                        <label class="block text-sm font-bold text-red-600 mb-1">🚨 3. 關鍵訊息 & 在地細節</label>
+                        <textarea id="notes" rows="4" placeholder="【魔法藏在細節裡】請輸入分校真實發生的事！
+(AI 會幫您把這些短句『擴寫並潤飾』成生動的故事)
+
+範例：今天旭日校發披薩慶祝段考結束，幾個國二生笑得很開心，強調我們陪孩子一起讀書一起玩。" class="w-full p-2.5 bg-red-50 border border-red-200 rounded-lg outline-none text-sm leading-relaxed placeholder-gray-400"></textarea>
                     </div>
                 </div>
 
@@ -136,7 +137,7 @@
 
         const LEVEL_NAMES = { "ele": "國小部", "jun": "國中部", "sen": "高中部" };
 
-        // --- 2. 產銷節奏大腦 (加入安全防護網) ---
+        // --- 2. 產銷節奏大腦 ---
         const MONTHLY_CALENDAR = {
             1: { fest: ["春節預熱"], recruit: { ele: ["寒假營隊"], jun: ["國一先修內招生", "寒假營隊"], sen: ["寒假營隊"] } },
             2: { fest: ["春節", "開學收心"], recruit: { ele: [], jun: ["國一先修外招生"], sen: [] } },
@@ -160,41 +161,13 @@
         };
 
         const COURSE_DB = {
-            "創新全人素養班": {
-                features: "以品學為本，五學並進。結合桌遊『我是CEO』，採用沉浸式教學。",
-                pain: "領域發展不均，課業負擔重，大數字計算焦慮。",
-                results: "學會尊重生命，成就全人發展。"
-            },
-            "黑洞科學": {
-                features: "每階段12單元不重複，一人一份實驗器材，理論轉化手作。",
-                pain: "坊間缺乏實體物，傳統多背誦缺乏思辨。",
-                results: "開啟科學好奇心，引導探究與思考。"
-            },
-            "科技作文": {
-                features: "觸控螢幕輔助，搭配範文與具體評分，漸進式強化寫作。",
-                pain: "詞彙不足不知下筆，結構鬆散，對寫作抗拒。",
-                results: "從害怕變成愛上寫作，文字理解力大增。"
-            },
-            "私中": {
-                features: "專為私中設計教材，精緻小班，強調理解非盲目刷題。",
-                pain: "大班制缺乏關注，過度刷題導致疲乏。",
-                results: "穩定學習節奏並兼顧全人心態。"
-            },
-            "國一先修": {
-                features: "超前完成國一首次段考進度，傳授筆記心法，舉辦態度翻轉營。",
-                pain: "擔心無法適應國中課業與生活壓力。",
-                results: "建立自信，成功建立家長信任感。"
-            },
-            "會考": {
-                features: "大量模擬實戰，傳授時間分配，要求錯題本，祈福安定軍心。",
-                pain: "面對大考範圍廣泛感到焦慮，不知如何統整。",
-                results: "順利考取理想志願。"
-            },
-            "學測": {
-                features: "依108課綱規劃複習，定期測驗搭配錯題分析補強。",
-                pain: "高中課業繁重，缺乏系統化策略與時間管理。",
-                results: "模擬考成績逐步上升，錄取第一志願。"
-            }
+            "創新全人素養班": { features: "以品學為本，五學並進。結合桌遊『我是CEO』，採用沉浸式教學。", pain: "領域發展不均，課業負擔重，大數字計算焦慮。", results: "學會尊重生命，成就全人發展。" },
+            "黑洞科學": { features: "每階段12單元不重複，一人一份實驗器材，理論轉化手作。", pain: "坊間缺乏實體物，傳統多背誦缺乏思辨。", results: "開啟科學好奇心，引導探究與思考。" },
+            "科技作文": { features: "觸控螢幕輔助，搭配範文與具體評分，漸進式強化寫作。", pain: "詞彙不足不知下筆，結構鬆散，對寫作抗拒。", results: "從害怕變成愛上寫作，文字理解力大增。" },
+            "私中": { features: "專為私中設計教材，精緻小班，強調理解非盲目刷題。", pain: "大班制缺乏關注，過度刷題導致疲乏。", results: "穩定學習節奏並兼顧全人心態。" },
+            "國一先修": { features: "超前完成國一首次段考進度，傳授筆記心法，舉辦態度翻轉營。", pain: "擔心無法適應國中課業與生活壓力。", results: "建立自信，成功建立家長信任感。" },
+            "會考": { features: "大量模擬實戰，傳授時間分配，要求錯題本，祈福安定軍心。", pain: "面對大考範圍廣泛感到焦慮，不知如何統整。", results: "順利考取理想志願。" },
+            "學測": { features: "依108課綱規劃複習，定期測驗搭配錯題分析補強。", pain: "高中課業繁重，缺乏系統化策略與時間管理。", results: "模擬考成績逐步上升，錄取第一志願。" }
         };
 
         let isApiMode = false;
@@ -232,11 +205,12 @@
 
         function updateDynamicInspirations() {
             const branch = document.getElementById('branchSelect').value;
-            const level = BRANCH_DATA[branch].level; 
+            // 防護：如果找不到分校，預設給 ele
+            const level = BRANCH_DATA[branch] ? BRANCH_DATA[branch].level : "ele"; 
             const docType = document.getElementById('docType').value;
             const container = document.getElementById('inspirationBox');
             
-            // 加入安全防護：如果讀不到資料，預設給空陣列，避免 undefined
+            // 防護：確保月份物件一定存在
             const rhythm = MONTHLY_CALENDAR[currentMonth] || { fest: [], recruit: { ele: [], jun: [], sen: [] } };
 
             container.innerHTML = '';
@@ -245,26 +219,39 @@
             if (docType === "節慶") {
                 recommendations = rhythm.fest || [];
             } else if (docType === "招生檔期") {
-                recommendations = (rhythm.recruit && rhythm.recruit[level]) ? rhythm.recruit[level] : [];
+                // 防護：檢查 recruit 裡有沒有這個 level，沒有就給空陣列
+                if (rhythm.recruit && rhythm.recruit[level]) {
+                    recommendations = rhythm.recruit[level];
+                } else {
+                    recommendations = [];
+                }
             } else if (docType === "常態課程") {
                 recommendations = NORMAL_COURSES[level] || [];
             }
 
-            // 如果完全沒有資料，顯示提示按鈕
-            if(recommendations.length === 0) {
-                recommendations = ["本月暫無特殊排程"];
+            // 🚀 終極淨水器濾網：拔除所有的 undefined / null / 空字串
+            let validRecs = [];
+            if (Array.isArray(recommendations)) {
+                validRecs = recommendations.filter(item => {
+                    return item !== undefined && 
+                           item !== null && 
+                           String(item).trim() !== "" && 
+                           String(item) !== "undefined" && 
+                           String(item) !== "null";
+                });
+            }
+
+            // 如果濾完之後沒有東西了，顯示預設文字
+            if (validRecs.length === 0) {
+                validRecs = ["本月暫無重點排程"];
             }
             
-            recommendations.forEach(item => {
-                // 如果 item 真的變成 undefined，強制跳過不顯示
-                if(!item) return; 
-
+            validRecs.forEach(item => {
                 const btn = document.createElement('button');
                 btn.className = "bg-white border border-gray-300 text-gray-700 text-xs px-3 py-1.5 rounded shadow-sm hover:bg-comma hover:text-white transition-all font-bold";
                 btn.innerText = item;
                 btn.onclick = () => {
-                    // 如果點擊的是無排程提示，不自動帶入
-                    if(item === "本月暫無特殊排程") return;
+                    if(item === "本月暫無重點排程") return; // 點擊預設文字不反應
                     document.getElementById('topic').value = item;
                     document.getElementById('notes').value = ""; 
                     checkHiddenCourseData(item);
@@ -309,7 +296,7 @@
                 }
             }
 
-            // 🚀 核心升級：字數 150-200，並且加入「強制改寫潤飾」指令
+            // 🚀 核心升級：強制 AI 潤飾擴寫，絕對不准當影印機！
             const finalPrompt = `角色設定：
 你是「COMMA 逗點教室」的資深社群總監。請完全吸收以下的品牌大腦，撰寫可以直接發布的 Facebook 貼文。
 
@@ -339,7 +326,8 @@ ${notes ? notes : "無提供細節，請依據品牌精神自由發揮"}
 ${hiddenCoursePrompt}
 
 🚨 核心寫作指令（極度重要）：
-請務必將上方提供的「在地真實細節素材」作為靈感，用溫暖、專業的社群小編語氣進行「重新改寫、擴寫與潤飾」，自然地揉合進文案的故事中。絕對不能原封不動地照抄使用者輸入的句子！讓讀者覺得這是一段生動流暢的真實分享。
+上方提供的「在地真實細節素材」只是給你參考的短句。
+請你務必將這些短句作為靈感，發揮創意進行「重新擴寫與潤飾」，把它變成一段生動、有畫面的真實情境故事！絕對禁止原封不動地照抄素材句子！
 
 【輸出格式最終限制】
 1. 直接輸出純文字貼文，不加開場廢話，禁用 JSON 或 Markdown 區塊。
@@ -367,7 +355,7 @@ ${hiddenCoursePrompt}
                         body: JSON.stringify({
                             model: 'llama-3.3-70b-versatile',
                             messages: [{ role: 'user', content: finalPrompt }],
-                            temperature: 0.7
+                            temperature: 0.8  // 將溫度調高到 0.8，讓 AI 更有創造力，比較不會照抄
                         })
                     });
                     const data = await res.json();
