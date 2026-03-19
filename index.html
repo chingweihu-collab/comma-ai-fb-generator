@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>逗點教室 | AI 品牌文案自動化產線 (V6.6 終極矯正版)</title>
+    <title>逗點教室 | AI 品牌文案自動化產線 (V6.7 終極定案版)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root { --comma-hq: #2d3b48; --comma-yellow: #ffd600; }
@@ -24,7 +24,7 @@
                 <span class="text-2xl">🔥</span>
                 <div>
                     <h1 class="text-xl font-bold tracking-wider">COMMA 逗點教室</h1>
-                    <p class="text-xs text-gray-300">品牌內容自動化產線 v6.6 (終極矯正版)</p>
+                    <p class="text-xs text-gray-300">品牌內容自動化產線 v6.7 (終極定案版)</p>
                 </div>
             </div>
             <div class="flex items-center gap-2 bg-slate-700 p-2 rounded-lg w-full md:w-auto">
@@ -221,7 +221,6 @@
                 rawRecs = NORMAL_COURSES[level] || [];
             }
 
-            // 🚀 終極過濾器：拔除任何長得像 undefined 的東西
             let validRecs = [];
             if (Array.isArray(rawRecs)) {
                 for (let i = 0; i < rawRecs.length; i++) {
@@ -241,7 +240,6 @@
             
             validRecs.forEach(item => {
                 const btn = document.createElement('button');
-                // 🚀 UI 優化：滑鼠移過變黃底黑字
                 btn.className = "bg-white border border-gray-300 text-gray-700 text-xs px-3 py-1.5 rounded shadow-sm hover:bg-[#ffd600] hover:border-[#ffd600] hover:text-[#2d3b48] transition-all font-bold";
                 btn.innerText = item;
                 btn.onclick = () => {
@@ -271,24 +269,33 @@
             navigator.clipboard.writeText(document.getElementById('outputArea').value).then(() => alert('已複製！'));
         }
 
-        // 🚀 標題強制矯正器 (Post-Processor)
+        // 🚀 標題強制矯正器 (強化版)
         function fixTitleFormat(text) {
             let lines = text.split('\n');
-            if (lines.length > 0) {
-                let firstLine = lines[0].trim();
-                // 拔掉 AI 自作聰明的「標題：」
+            
+            // 找出真正的第一行非空白文字
+            let firstLineIdx = 0;
+            while(firstLineIdx < lines.length && lines[firstLineIdx].trim() === '') {
+                firstLineIdx++;
+            }
+            
+            if (firstLineIdx < lines.length) {
+                let firstLine = lines[firstLineIdx].trim();
+                
+                // 拔掉各種 AI 喜歡擅自加上的贅字
                 firstLine = firstLine.replace(/^標題[：:]\s*/, '');
                 firstLine = firstLine.replace(/^\*\*標題[：:]\*\*\s*/, '');
+                firstLine = firstLine.replace(/^【標題】\s*/, '');
                 
-                // 強制加上 ◤ ◢
+                // 強制套用 ◤ ◢
                 if (!firstLine.includes('◤') && !firstLine.includes('◢')) {
-                    lines[0] = `◤ ${firstLine} ◢`;
+                    lines[firstLineIdx] = `◤ ${firstLine} ◢`;
                 } else if (!firstLine.includes('◤')) {
-                    lines[0] = `◤ ${firstLine}`;
+                    lines[firstLineIdx] = `◤ ${firstLine}`;
                 } else if (!firstLine.includes('◢')) {
-                    lines[0] = `${firstLine} ◢`;
+                    lines[firstLineIdx] = `${firstLine} ◢`;
                 } else {
-                    lines[0] = firstLine; // 都有就維持原樣
+                    lines[firstLineIdx] = firstLine;
                 }
                 return lines.join('\n');
             }
@@ -314,6 +321,7 @@
                 }
             }
 
+            // 🐛 修復關鍵：這裡把 ${branchInfo.name} 改成了 ${branch}
             const finalPrompt = `角色設定：
 你是「COMMA 逗點教室」的資深社群總監。請完全吸收以下的品牌大腦，撰寫可以直接發布的 Facebook 貼文。
 
@@ -334,7 +342,7 @@
 3. 溫暖呼籲 (CTA)：自然引導行動，附 3-5 個 Hashtag。
 
 【本次任務需求】
-發布分校：${LEVEL_NAMES[branchInfo.level]} (${branchInfo.name})
+發布分校：${LEVEL_NAMES[branchInfo.level]} (${branch})
 文案類型：${type}
 文案主題：${topic}
 
@@ -353,9 +361,9 @@ ${hiddenCoursePrompt}
 ⸻⸻⸻⸻⸻⸻
 「逗點，是一個創新的起點。」
  逗點官網｜https://www.comma.study
- ${branchInfo.name} IG｜${branchInfo.ig}
- ${branchInfo.name} 專線｜${branchInfo.phone}
- ${branchInfo.name} 地址｜${branchInfo.address}
+ ${branch} IG｜${branchInfo.ig}
+ ${branch} 專線｜${branchInfo.phone}
+ ${branch} 地址｜${branchInfo.address}
 `;
 
             if (!isApiMode) {
@@ -378,7 +386,7 @@ ${hiddenCoursePrompt}
                     const data = await res.json();
                     let aiResult = data.choices[0].message.content.trim();
                     
-                    // 🚀 執行標題強制矯正器
+                    // 執行標題強制矯正器
                     aiResult = fixTitleFormat(aiResult);
                     
                     document.getElementById('outputArea').value = aiResult;
