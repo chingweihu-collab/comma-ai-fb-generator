@@ -3,117 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>逗點教室 | AI 品牌文案自動化產線 (V6.7 終極定案版)</title>
+    <title>逗點教室 | AI 品牌文案自動化產線 (V7.0 尊榮視覺版)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        :root { --comma-hq: #2d3b48; --comma-yellow: #ffd600; }
-        body { font-family: 'Microsoft JhengHei', sans-serif; background-color: #f8fafc; }
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+        
+        :root { 
+            --comma-hq: #2d3b48; 
+            --comma-yellow: #ffd600; 
+            --comma-light: #f4f6f8;
+        }
+        body { 
+            font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; 
+            background-color: #eaeff2; /* 更高級的冷灰底色 */
+            background-image: radial-gradient(#d5dde4 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
         .bg-comma { background-color: var(--comma-hq); }
         .text-comma { color: var(--comma-hq); }
+        
+        /* 高級切換開關 */
         .toggle-checkbox:checked { right: 0; border-color: #10a978; }
         .toggle-checkbox:checked + .toggle-label { background-color: #10a978; }
-        .loader { border-top-color: var(--comma-hq); -webkit-animation: spinner 1.5s linear infinite; animation: spinner 1.5s linear infinite; }
+        
+        /* 載入動畫 */
+        .loader { border-top-color: var(--comma-yellow); -webkit-animation: spinner 1s ease-in-out infinite; animation: spinner 1s ease-in-out infinite; }
         @keyframes spinner { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        /* 高級輸入框 focus 特效 */
+        .input-focus:focus { box-shadow: 0 0 0 3px rgba(255, 214, 0, 0.4); border-color: var(--comma-yellow); }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <header class="bg-comma text-white shadow-md sticky top-0 z-50">
+    <header class="bg-gradient-to-r from-[#2d3b48] to-[#1a232b] text-white shadow-lg sticky top-0 z-50 border-b-4 border-[#ffd600]">
         <div class="container mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-3">
-                <span class="text-2xl">🔥</span>
+            <div class="flex items-center gap-4">
+                <div class="bg-white p-1 rounded-lg shadow-sm">
+                    <img src="./逗點教室LOGO.png" alt="COMMA Logo" class="h-10 w-auto object-contain" onerror="this.outerHTML='<span class=\'text-2xl px-2 text-black font-black\'>COMMA</span>'">
+                </div>
                 <div>
-                    <h1 class="text-xl font-bold tracking-wider">COMMA 逗點教室</h1>
-                    <p class="text-xs text-gray-300">品牌內容自動化產線 v6.7 (終極定案版)</p>
+                    <h1 class="text-xl font-black tracking-wider text-white drop-shadow-sm">品牌文案自動化產線</h1>
+                    <p class="text-xs text-[#ffd600] font-bold tracking-widest">V7.0 PRO EDITION</p>
                 </div>
             </div>
-            <div class="flex items-center gap-2 bg-slate-700 p-2 rounded-lg w-full md:w-auto">
-                <span class="text-xs font-bold text-gray-300 whitespace-nowrap">API Key:</span>
-                <input type="password" id="apiKey" placeholder="Groq API Key" class="text-sm p-1 px-2 rounded text-black w-full md:w-48 outline-none">
-                <button onclick="saveApiKey()" class="text-xs bg-slate-600 hover:bg-slate-500 px-3 py-1.5 rounded text-white font-bold transition">儲存</button>
+            <div class="flex items-center gap-3 bg-white/10 p-2 rounded-xl backdrop-blur-sm border border-white/20 w-full md:w-auto">
+                <span class="text-xs font-bold text-gray-200 whitespace-nowrap">API Key</span>
+                <input type="password" id="apiKey" placeholder="請輸入 Groq Key" class="text-sm p-1.5 px-3 rounded-lg text-black w-full md:w-48 outline-none focus:ring-2 focus:ring-[#ffd600]">
+                <button onclick="saveApiKey()" class="text-xs bg-[#ffd600] hover:bg-yellow-400 px-4 py-2 rounded-lg text-[#2d3b48] font-black transition-all shadow-sm active:scale-95">儲存</button>
             </div>
         </div>
     </header>
 
-    <main class="container mx-auto px-4 py-6 flex-grow grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <main class="container mx-auto px-4 py-8 flex-grow grid grid-cols-1 lg:grid-cols-12 gap-8">
         
-        <div class="lg:col-span-5 space-y-5">
+        <div class="lg:col-span-5 space-y-6">
             
-            <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex justify-between items-center">
-                <div>
-                    <h3 class="font-bold text-gray-800">運作模式</h3>
-                    <p class="text-xs text-gray-500" id="modeDesc">目前：產出 Prompt 供手動複製</p>
+            <div class="bg-white p-5 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 flex justify-between items-center transition-all hover:shadow-md">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-xl">⚙️</div>
+                    <div>
+                        <h3 class="font-bold text-[#2d3b48] text-sm">系統運作模式</h3>
+                        <p class="text-xs text-gray-500 font-medium" id="modeDesc">目前：產出 Prompt 供手動複製</p>
+                    </div>
                 </div>
                 <div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
-                    <input type="checkbox" name="toggle" id="modeToggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer transition-transform duration-200 ease-in-out z-10"/>
-                    <label for="modeToggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+                    <input type="checkbox" name="toggle" id="modeToggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer transition-transform duration-200 ease-in-out z-10 shadow-sm"/>
+                    <label for="modeToggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer shadow-inner"></label>
                 </div>
             </div>
 
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                <h3 class="font-bold text-gray-800 mb-4 border-l-4 border-comma-hq pl-2">策略文案需求設定</h3>
+            <div class="bg-white p-7 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-gray-100 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-2 h-full bg-[#ffd600]"></div>
+                <h3 class="font-black text-[#2d3b48] text-lg mb-6 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-[#ffd600]" fill="currentColor" viewBox="0 0 20 20"><path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.476.859h4.002z"></path></svg>
+                    策略文案需求設定
+                </h3>
                 
-                <div class="space-y-4">
+                <div class="space-y-5">
                     <div>
-                        <label class="block text-sm font-bold text-comma mb-1">📍 0. 選擇發文分校</label>
-                        <select id="branchSelect" onchange="updateDynamicInspirations()" class="w-full p-2.5 bg-yellow-50 border border-yellow-200 text-yellow-900 rounded-lg outline-none font-bold text-sm">
+                        <label class="block text-sm font-bold text-[#2d3b48] mb-1.5">📍 0. 選擇發文分校</label>
+                        <select id="branchSelect" onchange="updateDynamicInspirations()" class="w-full p-3 bg-slate-50 border border-slate-200 text-[#2d3b48] rounded-xl outline-none font-bold text-sm input-focus cursor-pointer transition-all">
                         </select>
                     </div>
 
                     <div>
-                        <label class="block text-sm font-bold text-gray-600 mb-1">1. 文案類型</label>
-                        <select id="docType" onchange="updateDynamicInspirations()" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg outline-none text-sm">
-                            <option value="常態課程">常態/核心課程推廣</option>
-                            <option value="招生檔期">重點招生/營隊檔期</option>
-                            <option value="節慶">節慶與時事</option>
+                        <label class="block text-sm font-bold text-[#2d3b48] mb-1.5">🎯 1. 文案類型</label>
+                        <select id="docType" onchange="updateDynamicInspirations()" class="w-full p-3 bg-slate-50 border border-slate-200 text-[#2d3b48] rounded-xl outline-none font-bold text-sm input-focus cursor-pointer transition-all">
+                            <option value="常態課程">📚 常態/核心課程推廣</option>
+                            <option value="招生檔期">🔥 重點招生/營隊檔期</option>
+                            <option value="節慶">🎉 節慶與時事預熱</option>
                         </select>
                     </div>
 
-                    <div class="bg-gray-50 p-3 rounded-lg border border-gray-200">
-                        <div class="text-xs font-bold text-gray-500 mb-2 flex justify-between items-center">
-                            <span>✨ 靈感角落 (點擊帶入主題)</span>
-                            <span id="sysTimeBadge" class="text-blue-600 font-bold text-[10px]"></span>
+                    <div class="bg-[#f8fafc] p-4 rounded-2xl border border-slate-200 shadow-inner">
+                        <div class="text-xs font-bold text-slate-500 mb-3 flex items-center gap-1.5">
+                            <span class="text-yellow-500 text-base">✨</span> 靈感角落 (點擊自動帶入主題)
                         </div>
-                        <div id="inspirationBox" class="flex flex-wrap gap-2 mt-2">
-                        </div>
+                        <div id="inspirationBox" class="flex flex-wrap gap-2.5">
+                            </div>
                     </div>
 
                     <div>
-                        <label class="block text-sm font-bold text-gray-600 mb-1">2. 文案主題</label>
-                        <input type="text" id="topic" placeholder="請點擊上方靈感，或手動輸入" class="w-full p-2.5 bg-white border border-slate-300 rounded-lg outline-none font-bold text-comma">
+                        <label class="block text-sm font-bold text-[#2d3b48] mb-1.5">📝 2. 文案主題</label>
+                        <input type="text" id="topic" placeholder="請點擊上方靈感，或手動輸入" class="w-full p-3 bg-white border border-slate-300 rounded-xl outline-none font-black text-[#2d3b48] input-focus transition-all shadow-sm">
                     </div>
                     
                     <div>
-                        <label class="block text-sm font-bold text-red-600 mb-1">🚨 3. 關鍵訊息 & 在地細節</label>
+                        <label class="block text-sm font-bold text-red-500 mb-1.5 flex items-center gap-1">
+                            🚨 3. 關鍵訊息 & 在地細節 <span class="text-xs font-medium text-gray-400">(強烈建議填寫)</span>
+                        </label>
                         <textarea id="notes" rows="4" placeholder="【魔法藏在細節裡】請輸入分校真實發生的事！
 (AI 會幫您把這些短句『擴寫並潤飾』成生動的故事)
 
-範例：今天旭日校發披薩慶祝段考結束，幾個國二生笑得很開心，強調我們陪孩子一起讀書一起玩。" class="w-full p-2.5 bg-red-50 border border-red-200 rounded-lg outline-none text-sm leading-relaxed placeholder-gray-400"></textarea>
+範例：今天旭日校發披薩慶祝段考結束，幾個國二生笑得很開心，強調我們陪孩子一起讀書一起玩。" class="w-full p-3 bg-red-50/50 border border-red-100 rounded-xl outline-none text-sm leading-relaxed placeholder-gray-400 input-focus transition-all shadow-sm"></textarea>
                     </div>
                 </div>
 
-                <button id="generateBtn" onclick="processGeneration()" class="w-full mt-6 bg-[#2d3b48] text-white font-bold py-3.5 rounded-xl shadow hover:opacity-90 active:scale-95 transition-all">
+                <button id="generateBtn" onclick="processGeneration()" class="w-full mt-8 bg-gradient-to-r from-[#2d3b48] to-[#1a232b] text-white font-black text-lg py-4 rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 flex justify-center items-center gap-2">
                     🚀 產出 FB 專屬 Prompt
                 </button>
             </div>
         </div>
 
-        <div class="lg:col-span-7 flex flex-col">
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 flex-grow flex flex-col overflow-hidden">
-                <div class="bg-[#f1f5f9] border-b border-gray-200 py-3 px-4 flex justify-between items-center">
-                    <span class="font-bold text-comma">Facebook 專屬產出結果</span>
-                    <span class="text-xs bg-comma text-white px-2 py-1 rounded">150-200字限定</span>
+        <div class="lg:col-span-7 flex flex-col h-[calc(100vh-8rem)] min-h-[600px]">
+            <div class="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-gray-100 flex-grow flex flex-col overflow-hidden relative">
+                <div class="bg-[#f8fafc] border-b border-gray-100 py-4 px-6 flex justify-between items-center">
+                    <span class="font-black text-[#2d3b48] flex items-center gap-2">
+                        <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        Facebook 專屬產出結果
+                    </span>
+                    <span class="text-xs bg-slate-200 text-slate-600 px-3 py-1 rounded-full font-bold">150-200字限定</span>
                 </div>
-                <div class="p-6 flex-grow bg-slate-50 relative">
-                    <div id="loadingUI" class="hidden absolute inset-0 bg-slate-50 bg-opacity-90 flex flex-col justify-center items-center z-10">
-                        <div class="loader border-4 border-gray-200 rounded-full w-12 h-12 mb-4"></div>
-                        <p class="text-comma font-bold animate-pulse">逗點品牌大腦運算中，請稍候...</p>
+                <div class="p-6 flex-grow bg-white relative">
+                    <div id="loadingUI" class="hidden absolute inset-0 bg-white/90 backdrop-blur-sm flex flex-col justify-center items-center z-10">
+                        <div class="loader border-4 border-slate-200 rounded-full w-14 h-14 mb-4"></div>
+                        <p class="text-[#2d3b48] font-black tracking-widest animate-pulse">逗點品牌大腦高速運算中...</p>
                     </div>
-                    <textarea id="outputArea" readonly class="w-full h-full min-h-[500px] p-4 bg-white border border-gray-200 rounded-lg text-gray-700 leading-relaxed resize-none focus:outline-none"></textarea>
+                    <textarea id="outputArea" readonly class="w-full h-full p-2 bg-transparent border-none text-[#2d3b48] text-[15px] leading-loose resize-none focus:outline-none placeholder-gray-300 font-medium" placeholder="您的完美文案將會顯示在這裡..."></textarea>
                 </div>
-                <div class="p-4 bg-white border-t border-gray-100 flex justify-between items-center">
-                    <span id="hiddenDataMsg" class="text-xs text-blue-600 font-bold hidden">🔍 已自動注入專屬課程價值</span>
-                    <button onclick="copyCurrentOutput()" class="bg-gray-800 text-white px-6 py-2 rounded-lg text-sm font-bold hover:bg-gray-700 transition-all ml-auto">📋 複製內容</button>
+                <div class="p-5 bg-[#f8fafc] border-t border-gray-100 flex justify-between items-center">
+                    <span id="hiddenDataMsg" class="text-xs text-[#10a978] font-bold bg-green-50 px-3 py-1 rounded-full border border-green-100 hidden flex items-center gap-1">
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                        已自動注入專屬課程價值
+                    </span>
+                    <button onclick="copyCurrentOutput()" class="bg-[#2d3b48] text-white px-8 py-2.5 rounded-xl text-sm font-black hover:bg-[#1a232b] hover:shadow-lg active:scale-95 transition-all ml-auto flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        一鍵複製內容
+                    </button>
                 </div>
             </div>
         </div>
@@ -136,19 +173,14 @@
 
         const LEVEL_NAMES = { "ele": "國小部", "jun": "國中部", "sen": "高中部" };
 
-        const MONTHLY_CALENDAR = {
-            1: { fest: ["春節預熱"], recruit: { ele: ["寒假營隊"], jun: ["國一先修內招生", "寒假營隊"], sen: ["寒假營隊"] } },
-            2: { fest: ["春節", "開學收心"], recruit: { ele: [], jun: ["國一先修外招生"], sen: [] } },
-            3: { fest: ["無特定節慶"], recruit: { ele: ["國小暑期營隊招生啟動"], jun: ["國一先修外招生"], sen: [] } },
-            4: { fest: ["兒童節", "清明節"], recruit: { ele: [], jun: ["國一先修外招生"], sen: [] } },
-            5: { fest: ["母親節"], recruit: { ele: [], jun: ["國二暑期營隊招生啟動"], sen: ["高二暑期營隊招生啟動"] } },
-            6: { fest: ["端午節", "畢業季"], recruit: { ele: [], jun: ["會考後銜接"], sen: [] } },
-            7: { fest: ["暑假開始"], recruit: { ele: ["暑期營隊"], jun: ["暑期營隊", "暑期輔導"], sen: ["暑期輔導"] } },
-            8: { fest: ["父親節"], recruit: { ele: ["暑期營隊"], jun: ["暑期輔導"], sen: ["暑期輔導"] } },
-            9: { fest: ["中秋節", "開學"], recruit: { ele: ["寒假營隊招生啟動"], jun: ["寒假營隊招生啟動"], sen: ["寒假營隊招生啟動"] } },
-            10: { fest: ["雙十節", "萬聖節"], recruit: { ele: [], jun: ["段考準備"], sen: ["段考準備"] } },
-            11: { fest: ["感恩節"], recruit: { ele: ["資優私中招生啟動"], jun: ["國一先修內招生"], sen: [] } },
-            12: { fest: ["聖誕節", "跨年"], recruit: { ele: ["小一先修招生啟動"], jun: ["國一先修內招生"], sen: ["高一贏領營招生啟動"] } }
+        // 🚀 解除月份限制：列出全年完整的節慶
+        const ALL_FESTIVALS = ["春節", "兒童節", "母親節", "端午節", "父親節", "中秋節", "雙十節", "萬聖節", "感恩節", "聖誕節", "跨年預熱"];
+
+        // 🚀 解除月份限制：依部別列出全年重點招生大檔
+        const ALL_RECRUITS = {
+            "ele": ["寒假營隊招生", "國小暑期營隊招生", "資優私中招生", "小一先修招生", "段考準備"],
+            "jun": ["國一先修內招生", "國一先修外招生", "會考後銜接", "國二暑期營隊", "暑期輔導", "寒假營隊招生", "段考準備", "會考模考班宣傳"],
+            "sen": ["高一贏領營招生", "高二暑期營隊", "暑期輔導", "寒假營隊招生", "段考準備", "學測衝刺班"]
         };
 
         const NORMAL_COURSES = {
@@ -168,7 +200,6 @@
         };
 
         let isApiMode = false;
-        let currentMonth = new Date().getMonth() + 1;
 
         window.onload = function() {
             const savedKey = localStorage.getItem('comma_groq_key');
@@ -181,15 +212,21 @@
                 branchSelect.appendChild(option);
             }
 
-            document.getElementById('sysTimeBadge').innerText = `📅 系統自動偵測：現在是 ${currentMonth} 月`;
-
             document.getElementById('modeToggle').addEventListener('change', function(e) {
                 isApiMode = e.target.checked;
                 document.getElementById('modeDesc').innerText = isApiMode ? "目前：API 模式" : "目前：Prompt 模式";
-                document.getElementById('generateBtn').innerHTML = isApiMode ? "✨ 呼叫 Llama3.3 產出 FB 貼文" : "🚀 產出 FB 專屬 Prompt";
-                document.getElementById('generateBtn').className = isApiMode 
-                    ? "w-full mt-6 bg-[#10a978] text-white font-bold py-3.5 rounded-xl shadow hover:opacity-90 transition-all"
-                    : "w-full mt-6 bg-[#2d3b48] text-white font-bold py-3.5 rounded-xl shadow hover:opacity-90 transition-all";
+                document.getElementById('generateBtn').innerHTML = isApiMode 
+                    ? "✨ 呼叫 Llama3.3 產出 FB 貼文" 
+                    : "🚀 產出 FB 專屬 Prompt";
+                
+                // 更換為綠色科技感按鈕
+                if(isApiMode) {
+                    document.getElementById('generateBtn').classList.remove('from-[#2d3b48]', 'to-[#1a232b]');
+                    document.getElementById('generateBtn').classList.add('from-[#10a978]', 'to-[#058b5e]');
+                } else {
+                    document.getElementById('generateBtn').classList.add('from-[#2d3b48]', 'to-[#1a232b]');
+                    document.getElementById('generateBtn').classList.remove('from-[#10a978]', 'to-[#058b5e]');
+                }
             });
 
             updateDynamicInspirations();
@@ -197,7 +234,7 @@
 
         function saveApiKey() {
             const key = document.getElementById('apiKey').value.trim();
-            if(key) { localStorage.setItem('comma_groq_key', key); alert('已儲存！'); }
+            if(key) { localStorage.setItem('comma_groq_key', key); alert('API 金鑰已安全儲存！'); }
         }
 
         function updateDynamicInspirations() {
@@ -206,17 +243,14 @@
             const docType = document.getElementById('docType').value;
             const container = document.getElementById('inspirationBox');
             
-            const rhythm = MONTHLY_CALENDAR[currentMonth] || { fest: [], recruit: { ele: [], jun: [], sen: [] } };
-
             container.innerHTML = '';
             let rawRecs = [];
 
+            // 🚀 套用無月份限制的全覽邏輯
             if (docType === "節慶") {
-                rawRecs = rhythm.fest || [];
+                rawRecs = ALL_FESTIVALS;
             } else if (docType === "招生檔期") {
-                if (rhythm.recruit && rhythm.recruit[level]) {
-                    rawRecs = rhythm.recruit[level];
-                }
+                rawRecs = ALL_RECRUITS[level] || [];
             } else if (docType === "常態課程") {
                 rawRecs = NORMAL_COURSES[level] || [];
             }
@@ -227,7 +261,7 @@
                     let item = rawRecs[i];
                     if (item && typeof item === 'string') {
                         let cleanItem = item.trim();
-                        if (cleanItem !== "" && cleanItem.toLowerCase() !== "undefined" && cleanItem.toLowerCase() !== "null") {
+                        if (cleanItem !== "" && cleanItem.toLowerCase() !== "undefined") {
                             validRecs.push(cleanItem);
                         }
                     }
@@ -235,18 +269,23 @@
             }
 
             if (validRecs.length === 0) {
-                validRecs = ["本月暫無重點排程"];
+                validRecs = ["本區塊暫無資料"];
             }
             
             validRecs.forEach(item => {
                 const btn = document.createElement('button');
-                btn.className = "bg-white border border-gray-300 text-gray-700 text-xs px-3 py-1.5 rounded shadow-sm hover:bg-[#ffd600] hover:border-[#ffd600] hover:text-[#2d3b48] transition-all font-bold";
+                // 🚀 升級為膠囊 (Pill) 風格的視覺按鈕
+                btn.className = "bg-white border border-slate-200 text-slate-600 text-[13px] px-4 py-1.5 rounded-full shadow-sm hover:bg-[#ffd600] hover:border-[#ffd600] hover:text-[#2d3b48] hover:shadow-md transition-all duration-200 font-bold tracking-wide";
                 btn.innerText = item;
                 btn.onclick = () => {
-                    if(item === "本月暫無重點排程") return; 
+                    if(item === "本區塊暫無資料") return; 
                     document.getElementById('topic').value = item;
                     document.getElementById('notes').value = ""; 
                     checkHiddenCourseData(item);
+                    
+                    // 點擊特效：稍微彈跳一下
+                    btn.classList.add('scale-95');
+                    setTimeout(() => btn.classList.remove('scale-95'), 150);
                 };
                 container.appendChild(btn);
             });
@@ -266,28 +305,23 @@
         }
 
         function copyCurrentOutput() {
-            navigator.clipboard.writeText(document.getElementById('outputArea').value).then(() => alert('已複製！'));
+            navigator.clipboard.writeText(document.getElementById('outputArea').value).then(() => {
+                alert('✨ 文案已成功複製，快去發布吧！');
+            });
         }
 
-        // 🚀 標題強制矯正器 (強化版)
         function fixTitleFormat(text) {
             let lines = text.split('\n');
-            
-            // 找出真正的第一行非空白文字
             let firstLineIdx = 0;
             while(firstLineIdx < lines.length && lines[firstLineIdx].trim() === '') {
                 firstLineIdx++;
             }
-            
             if (firstLineIdx < lines.length) {
                 let firstLine = lines[firstLineIdx].trim();
-                
-                // 拔掉各種 AI 喜歡擅自加上的贅字
                 firstLine = firstLine.replace(/^標題[：:]\s*/, '');
                 firstLine = firstLine.replace(/^\*\*標題[：:]\*\*\s*/, '');
                 firstLine = firstLine.replace(/^【標題】\s*/, '');
                 
-                // 強制套用 ◤ ◢
                 if (!firstLine.includes('◤') && !firstLine.includes('◢')) {
                     lines[firstLineIdx] = `◤ ${firstLine} ◢`;
                 } else if (!firstLine.includes('◤')) {
@@ -309,7 +343,11 @@
             const topic = document.getElementById('topic').value.trim();
             const notes = document.getElementById('notes').value.trim();
 
-            if(!topic) return alert("請輸入「文案主題」！");
+            if(!topic) {
+                alert("⚠️ 請先選擇或輸入「文案主題」喔！");
+                document.getElementById('topic').focus();
+                return;
+            }
 
             let hiddenCoursePrompt = "";
             for(let key in COURSE_DB) {
@@ -321,7 +359,6 @@
                 }
             }
 
-            // 🐛 修復關鍵：這裡把 ${branchInfo.name} 改成了 ${branch}
             const finalPrompt = `角色設定：
 你是「COMMA 逗點教室」的資深社群總監。請完全吸收以下的品牌大腦，撰寫可以直接發布的 Facebook 貼文。
 
@@ -372,6 +409,7 @@ ${hiddenCoursePrompt}
                 const apiKey = document.getElementById('apiKey').value.trim();
                 if(!apiKey) return alert('請先輸入 API Key！');
                 document.getElementById('loadingUI').classList.remove('hidden');
+                document.getElementById('outputArea').value = ""; // 清空舊畫面
                 
                 try {
                     const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -385,10 +423,7 @@ ${hiddenCoursePrompt}
                     });
                     const data = await res.json();
                     let aiResult = data.choices[0].message.content.trim();
-                    
-                    // 執行標題強制矯正器
                     aiResult = fixTitleFormat(aiResult);
-                    
                     document.getElementById('outputArea').value = aiResult;
                 } catch (err) {
                     alert('發生錯誤：' + err.message);
