@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>逗點教室 | AI 品牌文案自動生成器 (V8.0 變色龍靈魂版)</title>
+    <title>逗點教室 | AI 品牌文案自動化產線 (V8.1 防禦強化版)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
         
-        /* 變色龍系統 CSS 變數 (預設國小黃) */
         :root { 
             --comma-hq: #2d3b48; 
             --theme-color: #ffd600; 
@@ -22,7 +21,6 @@
             background-size: 20px 20px;
         }
         
-        /* 動態主題 Class */
         .border-theme { border-color: var(--theme-color) !important; }
         .bg-theme { background-color: var(--theme-color) !important; color: var(--theme-text) !important; }
         .text-theme { color: var(--theme-color) !important; }
@@ -44,8 +42,8 @@
                     <img src="./逗點教室LOGO.png" alt="COMMA Logo" class="h-10 w-auto object-contain" onerror="this.outerHTML='<span class=\'text-2xl px-2 text-black font-black\'>COMMA</span>'">
                 </div>
                 <div>
-                    <h1 class="text-xl font-black tracking-wider text-white drop-shadow-sm">品牌文案自動生成器線</h1>
-                    <p class="text-xs text-theme font-bold tracking-widest transition-colors duration-500">V8.0 SOUL EDITION</p>
+                    <h1 class="text-xl font-black tracking-wider text-white drop-shadow-sm">品牌文案自動化產線</h1>
+                    <p class="text-xs text-theme font-bold tracking-widest transition-colors duration-500">V8.1 PRO EDITION</p>
                 </div>
             </div>
             <div class="flex items-center gap-3 bg-white/10 p-2 rounded-xl backdrop-blur-sm border border-white/20 w-full md:w-auto">
@@ -59,7 +57,6 @@
     <main class="container mx-auto px-4 py-8 flex-grow grid grid-cols-1 lg:grid-cols-12 gap-8">
         
         <div class="lg:col-span-5 space-y-6">
-            
             <div class="bg-white p-5 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 flex justify-between items-center hover:shadow-md transition-all">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-xl">⚙️</div>
@@ -104,8 +101,7 @@
                         <div class="text-xs font-bold text-slate-500 mb-3 flex items-center gap-1.5">
                             <span class="text-theme text-base transition-colors duration-500">✨</span> 靈感角落 (點選帶入主題)
                         </div>
-                        <div id="inspirationBox" class="flex flex-wrap gap-2.5">
-                            </div>
+                        <div id="inspirationBox" class="flex flex-wrap gap-2.5"></div>
                     </div>
 
                     <div>
@@ -118,8 +114,6 @@
                             🚨 3. 關鍵訊息 & 在地細節 <span class="text-xs font-medium text-gray-400">(強烈建議填寫)</span>
                         </label>
                         <textarea id="notes" rows="4" placeholder="【魔法藏在細節裡】請輸入分校真實發生的事！
-(AI 會依據分校的「專屬語氣」，將短句擴寫成生動故事)
-
 範例：今天旭日校發披薩慶祝段考結束，幾個國二生笑得很開心，陪孩子一起讀書一起玩。" class="w-full p-3 bg-red-50/50 border border-red-100 rounded-xl outline-none text-sm leading-relaxed placeholder-gray-400 focus-theme transition-all shadow-sm"></textarea>
                     </div>
                 </div>
@@ -152,7 +146,6 @@
                         已注入分校語氣與課程價值
                     </span>
                     <button onclick="copyCurrentOutput()" class="bg-[#2d3b48] text-white px-8 py-2.5 rounded-xl text-sm font-black hover:bg-[#1a232b] hover:shadow-lg active:scale-95 transition-all ml-auto flex items-center gap-2">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
                         一鍵複製內容
                     </button>
                 </div>
@@ -161,11 +154,10 @@
     </main>
 
     <script>
-        // 🚀 變色龍色彩對應表
         const THEME_COLORS = {
-            "ele": { hex: "#ffd600", rgb: "255, 214, 0", text: "#2d3b48", name: "國小部" }, // 逗點黃
-            "jun": { hex: "#3b82f6", rgb: "59, 130, 246", text: "#ffffff", name: "國中部" }, // 逗點藍
-            "sen": { hex: "#10b981", rgb: "16, 185, 129", text: "#ffffff", name: "高中部" }  // 逗點綠
+            "ele": { hex: "#ffd600", rgb: "255, 214, 0", text: "#2d3b48", name: "國小部" },
+            "jun": { hex: "#3b82f6", rgb: "59, 130, 246", text: "#ffffff", name: "國中部" },
+            "sen": { hex: "#10b981", rgb: "16, 185, 129", text: "#ffffff", name: "高中部" }
         };
 
         const BRANCH_DATA = {
@@ -182,19 +174,20 @@
             "青埔升大校": { level: "sen", ig: "https://www.instagram.com/commaclass_senior/", phone: "03-287-6849", address: "桃園市中壢區永信路261號" }
         };
 
-        // 🚀 11 間分校專屬語氣資料庫 (Vibe Data)
+        const LEVEL_NAMES = { "ele": "國小部", "jun": "國中部", "sen": "高中部" };
+
         const BRANCH_STYLE_DB = {
             "青埔翱翔校": "熱血參與校園活動，強調老師與孩子間的緊密互動與驕傲感，常帶入活動現場的歡樂氣氛。",
-            "青園展翅校": "專業教育顧問口吻，善用條列式重點與對比（如 ❌/⭕），溫柔化解家長的教育焦慮。",
+            "青園展翅校": "專業教育顧問口吻，善用條列式重點與對比，溫柔化解家長的教育焦慮。",
             "內壢森耀校": "充滿活力與號召力，帶有急迫感（如限額卡位），善用營隊情境描述吸引家長與孩子報名。",
             "竹北知行校": "強調『親子共學』與『實作體驗』，直擊『家長不知孩子學什麼』的痛點，用字俐落專業。",
             "文化極光校": "極度感性溫暖（容易惹哭家長），重視孩子學習過程的蛻變與心理素質，大於單純的成績結果。",
             "青埔旭日校": "著重學習環境的氛圍營造與品牌質感，傳遞『給孩子最好環境』的安心與專業支持感。",
             "大園參天校": "自信霸氣的榜單守護者！強調『穩定領先』與『量身定製』的實力，語氣充滿榮譽感。",
-            "中壢心夢想校": "貼心陪伴的探班狂魔！極具親和力，常引用學生的真實對話（🗣️）來增加故事臨場感。",
+            "中壢心夢想校": "貼心陪伴的探班狂魔！極具親和力，常引用學生的真實對話來增加故事臨場感。",
             "青埔升大校": "專業且沉穩的高中教練。常分享具體的讀書心法、學測分科策略與生涯引導，亦師亦友。",
             "園中方舟校": "溫柔而堅定的戰友。喜歡用倒數計時與共同經歷的點滴，來穩定大考前夕的軍心。",
-            "大園晨光校": "熱情溫暖的陪伴者，強調全人教育與品格養成，讓家長感到無比安心。" // 預設補充
+            "大園晨光校": "熱情溫暖的陪伴者，強調全人教育與品格養成，讓家長感到無比安心。"
         };
 
         const ALL_FESTIVALS = ["春節", "兒童節", "母親節", "端午節", "父親節", "中秋節", "雙十節", "萬聖節", "感恩節", "聖誕節", "跨年預熱"];
@@ -234,16 +227,15 @@
             document.getElementById('modeToggle').addEventListener('change', function(e) {
                 isApiMode = e.target.checked;
                 document.getElementById('modeDesc').innerText = isApiMode ? "目前：API 模式" : "目前：Prompt 模式";
-                document.getElementById('generateBtn').innerHTML = isApiMode 
-                    ? "✨ 呼叫 Llama3.3 產出 FB 貼文" 
-                    : "🚀 產出 FB 專屬 Prompt";
+                const btn = document.getElementById('generateBtn');
+                btn.innerHTML = isApiMode ? "✨ 呼叫 Llama3.3 產出 FB 貼文" : "🚀 產出 FB 專屬 Prompt";
                 
                 if(isApiMode) {
-                    document.getElementById('generateBtn').classList.remove('from-[#2d3b48]', 'to-[#1a232b]');
-                    document.getElementById('generateBtn').classList.add('from-[#10a978]', 'to-[#058b5e]');
+                    btn.classList.remove('from-[#2d3b48]', 'to-[#1a232b]');
+                    btn.classList.add('from-[#10a978]', 'to-[#058b5e]');
                 } else {
-                    document.getElementById('generateBtn').classList.add('from-[#2d3b48]', 'to-[#1a232b]');
-                    document.getElementById('generateBtn').classList.remove('from-[#10a978]', 'to-[#058b5e]');
+                    btn.classList.add('from-[#2d3b48]', 'to-[#1a232b]');
+                    btn.classList.remove('from-[#10a978]', 'to-[#058b5e]');
                 }
             });
 
@@ -255,22 +247,17 @@
             if(key) { localStorage.setItem('comma_groq_key', key); alert('API 金鑰已安全儲存！'); }
         }
 
-        // 🚀 動態更新靈感與【變色龍系統】
         function updateDynamicInspirations() {
             const branch = document.getElementById('branchSelect').value;
             const level = BRANCH_DATA[branch] ? BRANCH_DATA[branch].level : "ele"; 
             const docType = document.getElementById('docType').value;
             const container = document.getElementById('inspirationBox');
             
-            // 變色龍核心：依據部別更新 CSS 變數
             const theme = THEME_COLORS[level];
             document.documentElement.style.setProperty('--theme-color', theme.hex);
             document.documentElement.style.setProperty('--theme-rgb', theme.rgb);
             document.documentElement.style.setProperty('--theme-text', theme.text);
-            
-            // 更新 Badge
-            const badge = document.getElementById('levelBadge');
-            badge.innerText = theme.name;
+            document.getElementById('levelBadge').innerText = theme.name;
 
             container.innerHTML = '';
             let rawRecs = [];
@@ -304,9 +291,6 @@
                     document.getElementById('topic').value = item;
                     document.getElementById('notes').value = ""; 
                     checkHiddenCourseData(item);
-                    
-                    btn.classList.add('scale-90');
-                    setTimeout(() => btn.classList.remove('scale-90'), 150);
                 };
                 container.appendChild(btn);
             });
@@ -358,41 +342,44 @@
         }
 
         async function processGeneration() {
-            const branch = document.getElementById('branchSelect').value;
-            const branchInfo = BRANCH_DATA[branch];
-            const type = document.getElementById('docType').value;
-            const topic = document.getElementById('topic').value.trim();
-            const notes = document.getElementById('notes').value.trim();
-            
-            // 抓取分校專屬風格
-            const branchStyle = BRANCH_STYLE_DB[branch] || "熱血、溫暖、專業的逗點標準語氣";
+            // 🚨 全域錯誤捕捉器
+            try {
+                const branch = document.getElementById('branchSelect').value;
+                const branchInfo = BRANCH_DATA[branch];
+                const type = document.getElementById('docType').value;
+                const topicEl = document.getElementById('topic');
+                const topic = topicEl.value.trim();
+                const notes = document.getElementById('notes').value.trim();
+                
+                const branchStyle = BRANCH_STYLE_DB[branch] || "熱血、溫暖、專業的逗點標準語氣";
 
-            if(!topic) {
-                alert("⚠️ 請先選擇或輸入「文案主題」喔！");
-                document.getElementById('topic').focus();
-                return;
-            }
-
-            let hiddenCoursePrompt = "";
-            let isCourseInjected = false;
-            for(let key in COURSE_DB) {
-                if(topic.includes(key) || notes.includes(key)) {
-                    hiddenCoursePrompt += `\n【隱藏版系統指示：${key} 專屬課程價值】\n`;
-                    hiddenCoursePrompt += `- 課程特色：${COURSE_DB[key].features}\n`;
-                    hiddenCoursePrompt += `- 家長痛點：${COURSE_DB[key].pain}\n`;
-                    hiddenCoursePrompt += `- 關鍵成果：${COURSE_DB[key].results}\n`;
-                    isCourseInjected = true;
+                // 🚨 視覺化防呆：如果沒填主題，框框會閃爍紅燈
+                if(!topic) {
+                    topicEl.classList.add('border-red-500', 'ring-2', 'ring-red-200');
+                    setTimeout(() => topicEl.classList.remove('border-red-500', 'ring-2', 'ring-red-200'), 2000);
+                    topicEl.focus();
+                    alert("⚠️ 逗點大腦提醒您：請先點擊靈感角落，或手動輸入「文案主題」喔！");
+                    return;
                 }
-            }
-            
-            // 顯示注入提示
-            const msg = document.getElementById('hiddenDataMsg');
-            if (isCourseInjected) {
-                msg.classList.remove('hidden');
-            }
 
-            // 🚀 核心升級：將「分校專屬風格」注入 Prompt
-            const finalPrompt = `角色設定：
+                let hiddenCoursePrompt = "";
+                let isCourseInjected = false;
+                for(let key in COURSE_DB) {
+                    if(topic.includes(key) || notes.includes(key)) {
+                        hiddenCoursePrompt += `\n【隱藏版系統指示：${key} 專屬課程價值】\n`;
+                        hiddenCoursePrompt += `- 課程特色：${COURSE_DB[key].features}\n`;
+                        hiddenCoursePrompt += `- 家長痛點：${COURSE_DB[key].pain}\n`;
+                        hiddenCoursePrompt += `- 關鍵成果：${COURSE_DB[key].results}\n`;
+                        isCourseInjected = true;
+                    }
+                }
+                
+                const msg = document.getElementById('hiddenDataMsg');
+                if (isCourseInjected) {
+                    msg.classList.remove('hidden');
+                }
+
+                const finalPrompt = `角色設定：
 你是「COMMA 逗點教室」的資深社群總監。請完全吸收以下的品牌大腦與分校風格，撰寫 Facebook 貼文。
 
 【逗點品牌大腦與核心靈魂】
@@ -433,15 +420,15 @@ ${hiddenCoursePrompt}
  ${branch} 地址｜${branchInfo.address}
 `;
 
-            if (!isApiMode) {
-                document.getElementById('outputArea').value = `【請複製以下內容貼給 ChatGPT】\n\n------------------------\n\n${finalPrompt}`;
-            } else {
-                const apiKey = document.getElementById('apiKey').value.trim();
-                if(!apiKey) return alert('請先輸入 API Key！');
-                document.getElementById('loadingUI').classList.remove('hidden');
-                document.getElementById('outputArea').value = ""; 
-                
-                try {
+                if (!isApiMode) {
+                    document.getElementById('outputArea').value = `【請複製以下內容貼給 ChatGPT】\n\n------------------------\n\n${finalPrompt}`;
+                } else {
+                    const apiKey = document.getElementById('apiKey').value.trim();
+                    if(!apiKey) return alert('⚠️ 請先在右上角輸入您的 Groq API Key！');
+                    
+                    document.getElementById('loadingUI').classList.remove('hidden');
+                    document.getElementById('outputArea').value = ""; 
+                    
                     const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
@@ -451,15 +438,25 @@ ${hiddenCoursePrompt}
                             temperature: 0.8
                         })
                     });
+                    
                     const data = await res.json();
+                    
+                    // 🚨 API 錯誤偵測
+                    if (!res.ok) {
+                        throw new Error(data.error?.message || "無法連線至 AI 伺服器，請檢查您的 API Key 或網路連線。");
+                    }
+
                     let aiResult = data.choices[0].message.content.trim();
                     aiResult = fixTitleFormat(aiResult);
                     document.getElementById('outputArea').value = aiResult;
-                } catch (err) {
-                    alert('發生錯誤：' + err.message);
-                } finally {
-                    document.getElementById('loadingUI').classList.add('hidden');
                 }
+            } catch (err) {
+                // 🚨 如果發生任何當機，會清楚印出在這裡
+                console.error(err);
+                document.getElementById('outputArea').value = `系統發生錯誤：\n${err.message}\n\n請檢查 API Key 是否正確，或聯絡技術人員。`;
+                alert("系統發生未預期錯誤：" + err.message);
+            } finally {
+                document.getElementById('loadingUI').classList.add('hidden');
             }
         }
     </script>
